@@ -64,7 +64,28 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 // Start Apollo Server (needed for both test and production)
-const server = new ApolloServer({ typeDefs, resolvers: authResolvers });
+const server = new ApolloServer({ 
+  typeDefs, 
+  resolvers: authResolvers,
+  context: ({ req }) => {
+    // Get the token from the request headers
+    const token = req.headers.authorization?.replace('Bearer ', '');
+    
+    if (token) {
+      try {
+        const jwt = require('jsonwebtoken');
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        return { user: decoded };
+      } catch (error) {
+        // Token is invalid, but we don't throw here
+        // Let individual resolvers handle authentication
+        return { user: null };
+      }
+    }
+    
+    return { user: null };
+  }
+});
 (async () => {
   await server.start();
   server.applyMiddleware({ app, path: '/graphql' });
@@ -79,6 +100,7 @@ app.use('/api/v1/audits', require('./routes/auditRoutes'));
 app.use('/api/v1/user-policies', require('./routes/userPolicyRoutes'));
 app.use('/api/v1/user', require('./routes/userRoutes'));
 app.use('/api/v1/admin', require('./routes/adminRoutes'));
+app.use('/api/v1/dashboard', require('./routes/dashboardRoutes'));
 
 
 const PORT = process.env.PORT || 4000;

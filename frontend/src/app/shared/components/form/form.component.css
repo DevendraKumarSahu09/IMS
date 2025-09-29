@@ -1,0 +1,38 @@
+.form-container {
+  @apply space-y-6;
+}
+
+.form-header {
+  @apply border-b border-neutral-200 pb-4;
+}
+
+.form-title {
+  @apply text-xl font-semibold text-neutral-900;
+}
+
+.form-subtitle {
+  @apply text-sm text-neutral-600 mt-1;
+}
+
+.form-body {
+  @apply space-y-6;
+}
+
+.form-footer {
+  @apply border-t border-neutral-200 pt-6;
+}
+
+.form-actions {
+  @apply flex justify-end space-x-3;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .form-actions {
+    @apply flex-col space-x-0 space-y-3;
+  }
+  
+  .form-actions > * {
+    @apply w-full;
+  }
+}

@@ -9,9 +9,15 @@ exports.getPayments = async (req, res) => {
     const payments = await Payment.find(filter)
       .populate('userPolicyId')
       .populate('userId', 'name email');
-    res.json(payments);
+    res.json({
+      success: true,
+      data: payments
+    });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch payments' });
+    res.status(500).json({ 
+      success: false,
+      error: 'Failed to fetch payments' 
+    });
   }
 };
 
@@ -20,8 +26,16 @@ exports.getUserPayments = async (req, res) => {
     const payments = await Payment.find({ userId: req.user.id })
       .populate('userPolicyId')
       .sort({ createdAt: -1 });
-    res.json(payments);
+    
+    console.log('Backend: Found payments for user:', payments.length);
+    console.log('Backend: Payment data:', JSON.stringify(payments, null, 2));
+    
+    res.json({
+      success: true,
+      data: payments
+    });
   } catch (err) {
+    console.error('Backend: Error fetching user payments:', err);
     res.status(500).json({ error: 'Failed to fetch user payments' });
   }
 };
@@ -38,7 +52,10 @@ exports.getPaymentById = async (req, res) => {
       return res.status(403).json({ error: 'Access denied' });
     }
     
-    res.json(payment);
+    res.json({
+      success: true,
+      data: payment
+    });
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch payment' });
   }
@@ -46,12 +63,20 @@ exports.getPaymentById = async (req, res) => {
 
 exports.createPayment = async (req, res) => {
   try {
-    const { policyId, amount, method, reference } = req.body;
+    const { userPolicyId, amount, method, reference } = req.body;
+    
+    console.log('Create payment request:', {
+      userId: req.user.id,
+      userPolicyId,
+      amount,
+      method,
+      reference
+    });
     
     // Create payment with user ID
     const payment = new Payment({
       userId: req.user.id,
-      userPolicyId: policyId,
+      userPolicyId: userPolicyId,
       amount,
       method,
       reference
@@ -59,8 +84,14 @@ exports.createPayment = async (req, res) => {
     
     const saved = await payment.save();
     await saved.populate('userPolicyId');
-    res.status(201).json(saved);
+    
+    console.log('Payment created successfully:', saved);
+    res.status(201).json({
+      success: true,
+      data: saved
+    });
   } catch (err) {
+    console.error('Error creating payment:', err);
     res.status(400).json({ error: err.message });
   }
 };

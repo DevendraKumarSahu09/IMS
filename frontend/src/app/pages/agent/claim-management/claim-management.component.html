@@ -1,0 +1,390 @@
+<div class="min-h-screen bg-gray-50 p-6">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">My Assigned Claims</h1>
+        <p class="text-gray-600 mt-2">Review and process claims assigned to you - Update status and add decision notes</p>
+      </div>
+      <div class="flex space-x-4">
+        <button (click)="loadClaims()" class="btn btn-outline">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex items-center justify-center py-12">
+    <div class="loading loading-spinner loading-lg"></div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-error mb-6">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <span>{{ error }}</span>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!loading && !error" class="space-y-6">
+    <!-- Status Filter -->
+    <div class="card bg-white shadow-sm">
+      <div class="card-body p-6">
+        <div class="flex items-center space-x-4">
+          <div class="flex-1">
+            <label class="label">
+              <span class="label-text font-medium">Filter by Status</span>
+            </label>
+            <select [(ngModel)]="filters.status" (ngModelChange)="onFilterChange()" class="select select-bordered w-full max-w-xs">
+              <option value="">All Status</option>
+              <option value="PENDING">Pending</option>
+              <option value="APPROVED">Approved</option>
+              <option value="REJECTED">Rejected</option>
+            </select>
+          </div>
+          <div *ngIf="filters.status" class="flex items-center space-x-2">
+            <span class="text-sm text-gray-600">Filtered by:</span>
+            <span class="badge badge-info">{{ filters.status }}</span>
+            <button (click)="clearFilters()" class="btn btn-sm btn-ghost">
+              Clear
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bulk Actions -->
+    <div *ngIf="selectedClaims.length > 0" class="card bg-blue-50 border-blue-200">
+      <div class="card-body p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <span class="text-sm font-medium text-blue-800">
+              {{ selectedClaims.length }} claim(s) selected
+            </span>
+            <div class="flex space-x-2">
+              <button 
+                (click)="bulkUpdateStatus('APPROVED')" 
+                class="btn btn-success btn-sm">
+                Approve Selected
+              </button>
+              <button 
+                (click)="bulkUpdateStatus('REJECTED')" 
+                class="btn btn-error btn-sm">
+                Reject Selected
+              </button>
+            </div>
+          </div>
+          <button (click)="selectedClaims = []" class="btn btn-ghost btn-sm">
+            Clear Selection
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Claims Table -->
+    <div class="card bg-white shadow-sm">
+      <div class="card-body p-0">
+        <div class="overflow-x-auto">
+          <table class="table table-zebra">
+            <thead>
+              <tr>
+                <th>
+                  <input 
+                    type="checkbox" 
+                    class="checkbox checkbox-sm"
+                    [checked]="selectedClaims.length === claims.length && claims.length > 0"
+                    (change)="selectAllClaims()">
+                </th>
+                <th>Customer</th>
+                <th>Policy</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Incident Date</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let claim of claims">
+                <td>
+                  <input 
+                    type="checkbox" 
+                    class="checkbox checkbox-sm"
+                    [checked]="selectedClaims.includes(claim._id)"
+                    (change)="selectClaim(claim._id)">
+                </td>
+                <td>
+                  <div class="flex items-center space-x-3">
+                    <div class="avatar placeholder">
+                      <div class="bg-neutral text-neutral-content rounded-full w-8">
+                        <span class="text-xs">{{ getClaimUserName(claim).charAt(0) }}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="font-bold">{{ getClaimUserName(claim) }}</div>
+                      <div class="text-sm opacity-50">{{ getClaimUserEmail(claim) }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-sm font-medium">{{ getClaimPolicyTitle(claim) }}</div>
+                  <div class="text-sm opacity-50">{{ getClaimPolicyCode(claim) }}</div>
+                </td>
+                <td class="font-medium">{{ formatCurrency(claim.amountClaimed) }}</td>
+                <td>
+                  <span class="badge" [ngClass]="getStatusColor(claim.status)">
+                    {{ claim.status }}
+                  </span>
+                </td>
+                <td class="text-sm">{{ formatDate(claim.incidentDate) }}</td>
+                <td class="text-sm">{{ formatDate(claim.createdAt) }}</td>
+                <td>
+                  <div class="flex space-x-2">
+                    <button 
+                      (click)="viewClaimDetails(claim)" 
+                      class="btn btn-info btn-xs">
+                      View Details
+                    </button>
+                      <button 
+                        *ngIf="claim.status === 'PENDING'"
+                        (click)="quickApproveClaim(claim._id)" 
+                        class="btn btn-success btn-xs">
+                        Approve
+                      </button>
+                      <button 
+                        *ngIf="claim.status === 'PENDING'"
+                        (click)="quickRejectClaim(claim._id)" 
+                        class="btn btn-error btn-xs">
+                        Reject
+                      </button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="claims.length === 0">
+                <td colspan="8" class="text-center py-12 text-gray-500">
+                  <div class="flex flex-col items-center space-y-4">
+                    <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <div>
+                      <h3 class="text-lg font-medium text-gray-900">No Claims Assigned</h3>
+                      <p class="text-sm text-gray-500 mt-1">
+                        You don't have any claims assigned to you yet.<br>
+                        Contact your admin to get claims assigned.
+                      </p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="pagination.pages > 1" class="flex justify-center">
+      <div class="btn-group">
+        <button 
+          *ngFor="let page of [].constructor(pagination.pages); let i = index"
+          (click)="onPageChange(i + 1)"
+          class="btn btn-sm"
+          [class.btn-active]="pagination.page === i + 1">
+          {{ i + 1 }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Status Update Modal -->
+<div *ngIf="showStatusModal" class="modal modal-open">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg mb-4">Update Claim Status</h3>
+    
+    <div class="form-control mb-4">
+      <label class="label">
+        <span class="label-text">Status</span>
+      </label>
+      <select [(ngModel)]="statusUpdate.status" class="select select-bordered w-full">
+        <option value="PENDING">Pending</option>
+        <option value="APPROVED">Approved</option>
+        <option value="REJECTED">Rejected</option>
+      </select>
+    </div>
+
+    <div class="form-control mb-4">
+      <label class="label">
+        <span class="label-text">Decision Notes</span>
+      </label>
+      <textarea 
+        [(ngModel)]="statusUpdate.notes"
+        class="textarea textarea-bordered h-24"
+        placeholder="Enter decision notes..."></textarea>
+    </div>
+
+    <div class="modal-action">
+      <button (click)="updateClaimStatus()" class="btn btn-primary">
+        Update Status
+      </button>
+      <button (click)="showStatusModal = false" class="btn btn-ghost">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Claim Details Modal -->
+<div *ngIf="showClaimDetailsModal && viewingClaim" class="modal modal-open">
+  <div class="modal-box max-w-4xl">
+    <h3 class="font-bold text-lg mb-4">Claim Details - #{{ viewingClaim._id.slice(-8) }}</h3>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Claim Information -->
+      <div class="space-y-4">
+        <h5 class="font-semibold text-gray-900 border-b pb-2">Claim Information</h5>
+        
+        <div class="space-y-3">
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-600">Claim ID:</span>
+            <span class="text-sm font-mono">{{ viewingClaim._id }}</span>
+          </div>
+          
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-600">Status:</span>
+            <span class="badge" [ngClass]="getStatusColor(viewingClaim.status)">
+              {{ viewingClaim.status }}
+            </span>
+          </div>
+          
+          
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-600">Amount Claimed:</span>
+            <span class="text-sm font-bold text-green-600">{{ formatCurrency(viewingClaim.amountClaimed) }}</span>
+          </div>
+          
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-600">Incident Date:</span>
+            <span class="text-sm">{{ formatDate(viewingClaim.incidentDate) }}</span>
+          </div>
+          
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-600">Days Since Incident:</span>
+            <span class="text-sm">{{ getDaysSinceIncident(viewingClaim) }} days</span>
+          </div>
+          
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-600">Submitted:</span>
+            <span class="text-sm">{{ formatDateTime(viewingClaim.createdAt) }}</span>
+          </div>
+          
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-600">Days Since Submission:</span>
+            <span class="text-sm">{{ getDaysSinceSubmission(viewingClaim) }} days</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Information -->
+      <div class="space-y-4">
+        <h5 class="font-semibold text-gray-900 border-b pb-2">Customer Information</h5>
+        
+        <div class="flex items-center space-x-4 mb-4">
+          <div class="avatar placeholder">
+            <div class="bg-primary text-primary-content rounded-full w-16">
+              <span class="text-xl font-bold">{{ getClaimUserName(viewingClaim).charAt(0) }}</span>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold">{{ getClaimUserName(viewingClaim) }}</h4>
+            <p class="text-gray-600">{{ getClaimUserEmail(viewingClaim) }}</p>
+          </div>
+        </div>
+        
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-600">Customer ID:</span>
+            <span class="text-sm font-mono">{{ getUserId(viewingClaim) }}</span>
+          </div>
+        </div>
+        
+      </div>
+
+      <!-- Policy Information -->
+      <div class="space-y-4">
+        <h5 class="font-semibold text-gray-900 border-b pb-2">Policy Information</h5>
+        
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-600">Policy:</span>
+            <span class="text-sm font-bold">{{ getClaimPolicyTitle(viewingClaim) }}</span>
+          </div>
+          
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-600">Policy Code:</span>
+            <span class="text-sm font-mono">{{ getClaimPolicyCode(viewingClaim) }}</span>
+          </div>
+          
+          <div class="flex justify-between">
+            <span class="text-sm font-medium text-gray-600">Policy ID:</span>
+            <span class="text-sm font-mono">{{ getUserPolicyId(viewingClaim) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Incident Details -->
+      <div class="space-y-4">
+        <h5 class="font-semibold text-gray-900 border-b pb-2">Incident Details</h5>
+        
+        <div class="space-y-3">
+          <div>
+            <span class="text-sm font-medium text-gray-600 block mb-2">Description:</span>
+            <div class="bg-gray-50 p-3 rounded-lg">
+              <p class="text-sm text-gray-800">{{ viewingClaim.description }}</p>
+            </div>
+          </div>
+          
+          <div *ngIf="viewingClaim.decisionNotes">
+            <span class="text-sm font-medium text-gray-600 block mb-2">Decision Notes:</span>
+            <div class="bg-blue-50 p-3 rounded-lg">
+              <p class="text-sm text-blue-800">{{ viewingClaim.decisionNotes }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Claim Timeline -->
+    <div class="mt-6">
+      <h5 class="font-semibold text-gray-900 border-b pb-2 mb-4">Claim Timeline</h5>
+      
+      <div class="space-y-4">
+        <div *ngFor="let event of getClaimTimeline(viewingClaim)" class="flex items-start space-x-3">
+          <div class="flex-shrink-0 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+            <span class="text-lg">{{ event.icon }}</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-medium text-gray-900">{{ event.action }}</p>
+              <p class="text-xs text-gray-500">{{ formatDateTime(event.timestamp) }}</p>
+            </div>
+            <p class="text-sm text-gray-600 mt-1">{{ event.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="modal-action">
+      <button (click)="closeClaimDetailsModal()" class="btn btn-primary">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

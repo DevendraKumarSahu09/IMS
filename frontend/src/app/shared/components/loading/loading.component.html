@@ -1,0 +1,8 @@
+<div class="loading-container" [class.hidden]="!isLoading">
+  <div class="loading-overlay">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <div class="loading-text" *ngIf="message">{{ message }}</div>
+    </div>
+  </div>
+</div>

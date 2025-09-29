@@ -1,0 +1,114 @@
+/* Policy Management Specific Styles */
+.policy-card {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow;
+}
+
+.policy-header {
+  @apply flex items-start justify-between mb-4;
+}
+
+.policy-title {
+  @apply text-lg font-semibold text-gray-900 mb-1;
+}
+
+.policy-code {
+  @apply text-sm text-gray-500 font-mono;
+}
+
+.policy-description {
+  @apply text-gray-600 text-sm mb-4 line-clamp-2;
+}
+
+.policy-stats {
+  @apply grid grid-cols-2 gap-4 mb-4;
+}
+
+.policy-stat {
+  @apply text-center;
+}
+
+.policy-stat-value {
+  @apply text-lg font-bold text-gray-900;
+}
+
+.policy-stat-label {
+  @apply text-xs text-gray-500 uppercase tracking-wide;
+}
+
+.policy-actions {
+  @apply flex space-x-2 pt-4 border-t border-gray-100;
+}
+
+/* Form Styles */
+.form-section {
+  @apply space-y-6;
+}
+
+.form-group {
+  @apply space-y-2;
+}
+
+.form-row {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
+}
+
+/* Table Enhancements */
+.policy-table {
+  @apply min-w-full;
+}
+
+.policy-table th {
+  @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50;
+}
+
+.policy-table td {
+  @apply px-6 py-4 whitespace-nowrap text-sm;
+}
+
+.policy-table tbody tr:hover {
+  @apply bg-gray-50;
+}
+
+/* Status Indicators */
+.status-active {
+  @apply bg-green-100 text-green-800;
+}
+
+.status-inactive {
+  @apply bg-red-100 text-red-800;
+}
+
+.status-draft {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .policy-stats {
+    @apply grid-cols-1;
+  }
+  
+  .form-row {
+    @apply grid-cols-1;
+  }
+  
+  .policy-actions {
+    @apply flex-col space-x-0 space-y-2;
+  }
+}
+
+/* Animation */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,377 @@
+<div class="container mx-auto px-4 py-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">Claim Management</h1>
+      <p class="text-gray-600 mt-1">Manage and process all insurance claims</p>
+    </div>
+    <div class="flex gap-2">
+      <button 
+        (click)="loadClaims()" 
+        class="btn btn-outline btn-sm"
+        [disabled]="loading">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div class="flex items-center">
+        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </div>
+        <div class="ml-4">
+          <div class="text-2xl font-bold text-gray-900">{{ getClaimSummary().total }}</div>
+          <div class="text-sm text-gray-600">Total Claims</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div class="flex items-center">
+        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <div class="ml-4">
+          <div class="text-2xl font-bold text-gray-900">{{ getClaimSummary().pending }}</div>
+          <div class="text-sm text-gray-600">Pending</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div class="flex items-center">
+        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <div class="ml-4">
+          <div class="text-2xl font-bold text-gray-900">{{ getClaimSummary().approved }}</div>
+          <div class="text-sm text-gray-600">Approved</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div class="flex items-center">
+        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </div>
+        <div class="ml-4">
+          <div class="text-2xl font-bold text-gray-900">{{ getClaimSummary().rejected }}</div>
+          <div class="text-sm text-gray-600">Rejected</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters and Search -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+        <select [(ngModel)]="filters.status" (ngModelChange)="onFilterChange()" class="select select-bordered w-full">
+          <option value="">All Status</option>
+          <option value="PENDING">Pending</option>
+          <option value="APPROVED">Approved</option>
+          <option value="REJECTED">Rejected</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">From Date</label>
+        <input
+          type="date"
+          [(ngModel)]="filters.dateFrom"
+          (ngModelChange)="onFilterChange()"
+          class="input input-bordered w-full">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">To Date</label>
+        <input
+          type="date"
+          [(ngModel)]="filters.dateTo"
+          (ngModelChange)="onFilterChange()"
+          class="input input-bordered w-full">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Min Amount</label>
+        <input
+          type="number"
+          [(ngModel)]="filters.amountMin"
+          (ngModelChange)="onFilterChange()"
+          placeholder="Min amount"
+          class="input input-bordered w-full">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Max Amount</label>
+        <input
+          type="number"
+          [(ngModel)]="filters.amountMax"
+          (ngModelChange)="onFilterChange()"
+          placeholder="Max amount"
+          class="input input-bordered w-full">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+        <input
+          type="text"
+          [(ngModel)]="filters.search"
+          (ngModelChange)="onFilterChange()"
+          placeholder="Search claims..."
+          class="input input-bordered w-full">
+      </div>
+    </div>
+
+    <div class="flex gap-2 mt-4 items-center">
+      <button (click)="applyFilters()" class="btn btn-primary btn-sm">
+        Apply Filters
+      </button>
+      <button (click)="clearFilters()" class="btn btn-outline btn-sm">
+        Clear
+      </button>
+      <div *ngIf="getActiveFilterCount() > 0" class="text-sm text-gray-600 ml-2">
+        {{ getActiveFilterCount() }} filter(s) active
+      </div>
+    </div>
+  </div>
+
+  <!-- Bulk Actions -->
+  <div *ngIf="selectedClaims.length > 0" class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <span class="text-sm font-medium text-blue-900">
+          {{ selectedClaims.length }} claim(s) selected
+        </span>
+        <select [(ngModel)]="bulkAction" class="select select-bordered select-sm">
+          <option value="">Select Action</option>
+          <option value="APPROVED">Approve Selected</option>
+          <option value="REJECTED">Reject Selected</option>
+        </select>
+        <button (click)="performBulkAction()" class="btn btn-primary btn-sm">
+          Apply Action
+        </button>
+      </div>
+      <button (click)="selectedClaims = []" class="btn btn-ghost btn-sm">
+        Clear Selection
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex justify-center items-center py-12">
+    <div class="loading loading-spinner loading-lg"></div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="alert alert-error mb-6">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <span>{{ error }}</span>
+  </div>
+
+  <!-- Claims Table -->
+  <div *ngIf="!loading && !error" class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="table table-zebra w-full">
+        <thead>
+          <tr>
+            <th>
+              <input
+                type="checkbox"
+                [checked]="selectedClaims.length === claims.length && claims.length > 0"
+                (change)="selectAllClaims()"
+                class="checkbox checkbox-sm">
+            </th>
+            <th>Claim ID</th>
+            <th>Customer</th>
+            <th>Policy</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Incident Date</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let claim of claims" class="hover">
+            <td>
+              <input
+                type="checkbox"
+                [checked]="isClaimSelected(claim._id)"
+                (change)="selectClaim(claim._id)"
+                class="checkbox checkbox-sm">
+            </td>
+            <td>
+              <div class="font-mono text-sm">{{ claim._id.slice(-8) }}</div>
+            </td>
+            <td>
+              <div>
+                <div class="font-medium">{{ getClaimUserName(claim) }}</div>
+                <div class="text-sm text-gray-500">{{ getClaimUserEmail(claim) }}</div>
+              </div>
+            </td>
+            <td>
+              <div>
+                <div class="font-medium">{{ getClaimPolicyTitle(claim) }}</div>
+                <div class="text-sm text-gray-500">{{ getClaimPolicyCode(claim) }}</div>
+              </div>
+            </td>
+            <td>
+              <div class="font-medium">{{ formatCurrency(claim.amountClaimed) }}</div>
+            </td>
+            <td>
+              <div class="badge" [ngClass]="getStatusColor(claim.status)">
+                <span class="mr-1">{{ getStatusIcon(claim.status) }}</span>
+                {{ claim.status }}
+              </div>
+            </td>
+            <td>
+              <div class="text-sm">{{ formatDate(claim.incidentDate) }}</div>
+            </td>
+            <td>
+              <div class="text-sm text-gray-600">{{ formatDate(claim.createdAt) }}</div>
+            </td>
+            <td>
+              <div class="flex gap-1">
+                <button
+                  (click)="openStatusModal(claim)"
+                  class="btn btn-ghost btn-xs">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                  Update
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="claims.length === 0" class="text-center py-12">
+      <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+      </svg>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">No claims found</h3>
+      <p class="text-gray-600">Try adjusting your search criteria.</p>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="!loading && !error && pagination.pages > 1" class="flex justify-center mt-6">
+    <div class="join">
+      <button
+        (click)="goToPage(pagination.page - 1)"
+        [disabled]="pagination.page <= 1"
+        class="join-item btn btn-sm">
+        Previous
+      </button>
+      
+      <button
+        *ngFor="let page of getTotalPages()"
+        (click)="goToPage(page)"
+        [class.btn-active]="page === pagination.page"
+        class="join-item btn btn-sm">
+        {{ page }}
+      </button>
+      
+      <button
+        (click)="goToPage(pagination.page + 1)"
+        [disabled]="pagination.page >= pagination.pages"
+        class="join-item btn btn-sm">
+        Next
+      </button>
+    </div>
+  </div>
+
+  <!-- Pagination Info -->
+  <div *ngIf="!loading && !error" class="text-center text-sm text-gray-600 mt-4">
+    Showing {{ (pagination.page - 1) * pagination.limit + 1 }} to 
+    {{ Math.min(pagination.page * pagination.limit, pagination.total) }} of 
+    {{ pagination.total }} claims
+  </div>
+</div>
+
+<!-- Status Update Modal -->
+<div *ngIf="showStatusModal && editingClaim" class="modal modal-open">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg mb-4">Update Claim Status</h3>
+    
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Claim ID</label>
+        <div class="font-mono text-sm bg-gray-100 p-2 rounded">{{ editingClaim._id.slice(-8) }}</div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Customer</label>
+          <div class="text-sm">{{ getClaimUserName(editingClaim) }} ({{ getClaimUserEmail(editingClaim) }})</div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
+        <div class="text-sm font-medium">{{ formatCurrency(editingClaim.amountClaimed) }}</div>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Status</span>
+        </label>
+        <select
+          [(ngModel)]="statusUpdate.status"
+          name="status"
+          class="select select-bordered">
+          <option value="PENDING">Pending</option>
+          <option value="APPROVED">Approved</option>
+          <option value="REJECTED">Rejected</option>
+        </select>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Decision Notes</span>
+        </label>
+        <textarea
+          [(ngModel)]="statusUpdate.notes"
+          name="notes"
+          class="textarea textarea-bordered"
+          rows="3"
+          placeholder="Add notes about the decision..."></textarea>
+      </div>
+    </div>
+
+    <div class="modal-action">
+      <button
+        type="button"
+        (click)="closeStatusModal()"
+        class="btn btn-ghost">
+        Cancel
+      </button>
+      <button
+        type="button"
+        (click)="updateClaimStatus()"
+        class="btn btn-primary">
+        Update Status
+      </button>
+    </div>
+  </div>
+</div>

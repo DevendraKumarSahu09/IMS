@@ -1,0 +1,206 @@
+<div class="min-h-screen bg-gray-50 p-6">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">Audit Logs</h1>
+        <p class="text-gray-600 mt-2">Monitor system activity and user actions</p>
+      </div>
+      <button 
+        class="btn btn-outline"
+        (click)="exportLogs()">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        Export Logs
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="card bg-white shadow-sm mb-8">
+    <div class="card-header">
+      <h3 class="card-title">Filters</h3>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+          <label class="label">
+            <span class="label-text">Action</span>
+          </label>
+          <select class="select select-bordered w-full" [(ngModel)]="filters.action">
+            <option value="">All Actions</option>
+            <option value="login">Login</option>
+            <option value="logout">Logout</option>
+            <option value="policy purchase">Policy Purchase</option>
+            <option value="policy creation">Policy Creation</option>
+            <option value="policy update">Policy Update</option>
+            <option value="policy deletion">Policy Deletion</option>
+            <option value="claim submission">Claim Submission</option>
+            <option value="claim status update">Claim Status Update</option>
+            <option value="user registration">User Registration</option>
+            <option value="user update">User Update</option>
+            <option value="user deletion">User Deletion</option>
+            <option value="policy cancellation">Policy Cancellation</option>
+            <option value="payment">Payment</option>
+          </select>
+        </div>
+        <div>
+          <label class="label">
+            <span class="label-text">Actor ID</span>
+          </label>
+          <input 
+            type="text" 
+            class="input input-bordered w-full"
+            [(ngModel)]="filters.actorId"
+            placeholder="Enter actor ID">
+        </div>
+        <div>
+          <label class="label">
+            <span class="label-text">From Date</span>
+          </label>
+          <input 
+            type="date" 
+            class="input input-bordered w-full"
+            [(ngModel)]="filters.dateFrom">
+        </div>
+        <div>
+          <label class="label">
+            <span class="label-text">To Date</span>
+          </label>
+          <input 
+            type="date" 
+            class="input input-bordered w-full"
+            [(ngModel)]="filters.dateTo">
+        </div>
+      </div>
+      <div class="flex space-x-4 mt-4">
+        <button class="btn btn-primary" (click)="applyFilters()">Apply Filters</button>
+        <button class="btn btn-ghost" (click)="clearFilters()">Clear Filters</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex items-center justify-center py-12">
+    <div class="loading loading-spinner loading-lg"></div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-error mb-6">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <span>{{ error }}</span>
+  </div>
+
+  <!-- Audit Logs List -->
+  <div *ngIf="!loading && !error" class="card bg-white shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">System Activity Logs</h3>
+      <div class="text-sm text-gray-500">
+        Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ getMaxDisplayed() }} of {{ totalLogs }} logs
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="overflow-x-auto">
+        <table class="table table-zebra">
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>Actor</th>
+              <th>Details</th>
+              <th>IP Address</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of auditLogs">
+              <td>
+                <div class="flex items-center space-x-2">
+                  <span class="text-2xl">{{ getActionIcon(log.action) }}</span>
+                  <span class="font-medium" [ngClass]="getActionColor(log.action)">
+                    {{ log.action }}
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <div class="font-medium">{{ log.actor?.name || 'Unknown User' }}</div>
+                  <div class="text-sm text-gray-500">{{ log.actor?.email || log.actorId }}</div>
+                  <div class="text-xs text-gray-400">{{ log.actor?.role || 'Unknown Role' }}</div>
+                </div>
+              </td>
+              <td>
+                <div class="max-w-xs">
+                  <div class="text-sm" *ngIf="log.details?.description">
+                    {{ log.details.description }}
+                  </div>
+                  <div class="text-sm" *ngIf="log.details?.amountClaimed">
+                    Amount: {{ log.details.amountClaimed | currency:'INR' }}
+                  </div>
+                  <div class="text-sm" *ngIf="log.details?.status">
+                    Status: {{ log.details.status }}
+                  </div>
+                  <div class="text-sm" *ngIf="log.details?.notes">
+                    Notes: {{ log.details.notes }}
+                  </div>
+                  <div class="text-sm" *ngIf="log.details?.policyId">
+                    Policy ID: {{ log.details.policyId }}
+                  </div>
+                  <div class="text-sm" *ngIf="log.details?.policyCode">
+                    Policy Code: {{ log.details.policyCode }}
+                  </div>
+                  <div class="text-sm" *ngIf="log.details?.policyTitle">
+                    Policy Title: {{ log.details.policyTitle }}
+                  </div>
+                  <div class="text-sm" *ngIf="log.details?.targetUserId">
+                    Target User ID: {{ log.details.targetUserId }}
+                  </div>
+                  <div class="text-sm" *ngIf="log.details?.changes">
+                    Changes: {{ formatChanges(log.details.changes) }}
+                  </div>
+                  <div class="text-xs text-gray-500" *ngIf="!hasDetails(log.details)">
+                    No additional details
+                  </div>
+                </div>
+              </td>
+              <td class="font-mono text-sm">{{ log.ip }}</td>
+              <td class="text-sm">{{ formatDate(log.timestamp) }}</td>
+            </tr>
+            <tr *ngIf="auditLogs.length === 0">
+              <td colspan="5" class="text-center py-8 text-gray-500">
+                No audit logs found
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="!loading && !error && getTotalPages() > 1" class="flex justify-center mt-8">
+    <div class="btn-group">
+      <button 
+        class="btn btn-sm"
+        [disabled]="currentPage === 1"
+        (click)="goToPage(currentPage - 1)">
+        Previous
+      </button>
+      <button 
+        *ngFor="let page of [].constructor(getTotalPages()); let i = index"
+        class="btn btn-sm"
+        [class.btn-active]="currentPage === i + 1"
+        (click)="goToPage(i + 1)">
+        {{ i + 1 }}
+      </button>
+      <button 
+        class="btn btn-sm"
+        [disabled]="currentPage === getTotalPages()"
+        (click)="goToPage(currentPage + 1)">
+        Next
+      </button>
+    </div>
+  </div>
+</div>
