@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { NotificationComponent } from './shared/components/notification/notification.component';
-import { ThemeToggleComponent } from './shared/components/theme-toggle/theme-toggle.component';
 import { AuthService } from './services/auth.service';
 import { User } from './store/auth/auth.state';
 import { Store } from '@ngrx/store';
@@ -14,13 +13,15 @@ import { selectAuthState } from './store/auth/auth.selectors';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, NotificationComponent, ThemeToggleComponent, CommonModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, NotificationComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'IMS - Insurance Management System';
   isMobileMenuOpen = false;
+  isAdminDropdownOpen = false;
+  isCustomerDropdownOpen = false;
   isAuthenticated = false;
   currentUser: User | null = null;
   currentRoute = '';
@@ -61,9 +62,27 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
+  toggleAdminDropdown() {
+    this.isAdminDropdownOpen = !this.isAdminDropdownOpen;
+  }
+
+  closeAdminDropdown() {
+    this.isAdminDropdownOpen = false;
+  }
+
+  toggleCustomerDropdown() {
+    this.isCustomerDropdownOpen = !this.isCustomerDropdownOpen;
+  }
+
+  closeCustomerDropdown() {
+    this.isCustomerDropdownOpen = false;
+  }
+
   logout() {
     this.authService.logout();
     this.isMobileMenuOpen = false;
+    this.isAdminDropdownOpen = false;
+    this.isCustomerDropdownOpen = false;
   }
 
   getUserDisplayName(): string {
@@ -90,6 +109,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
   shouldShowNavigation(): boolean {
     return this.isAuthenticated && !this.isOnAuthPage();
+  }
+
+  isAdmin(): boolean {
+    return this.currentUser?.role === 'admin';
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    if (this.isAdminDropdownOpen) {
+      this.closeAdminDropdown();
+    }
+    if (this.isCustomerDropdownOpen) {
+      this.closeCustomerDropdown();
+    }
   }
 
 }

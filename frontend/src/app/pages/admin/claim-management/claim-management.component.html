@@ -1,178 +1,276 @@
-<div class="container mx-auto px-4 py-6">
-  <!-- Header -->
-  <div class="flex justify-between items-center mb-6">
-    <div>
-      <h1 class="text-3xl font-bold text-gray-900">Claim Management</h1>
-      <p class="text-gray-600 mt-1">Manage and process all insurance claims</p>
-    </div>
-    <div class="flex gap-2">
-      <button 
-        (click)="loadClaims()" 
-        class="btn btn-outline btn-sm"
-        [disabled]="loading">
-        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-        </svg>
-        Refresh
-      </button>
-    </div>
+<div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50">
+  <!-- Advanced Abstract Background Elements -->
+  <div class="absolute inset-0 overflow-hidden">
+    <!-- Floating Glass Orbs with Enhanced Movement -->
+    <div class="absolute -top-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full filter blur-3xl animate-float opacity-70"></div>
+    <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-pink-500/20 rounded-full filter blur-3xl animate-float opacity-60" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full filter blur-3xl animate-float opacity-50" style="animation-delay: 4s;"></div>
+    
+    <!-- Dynamic Moving Blur Effects -->
+    <div class="absolute top-10 left-1/4 w-72 h-72 bg-gradient-to-br from-emerald-400/15 to-teal-500/15 rounded-full filter blur-3xl animate-float opacity-60" style="animation-delay: 1.5s; animation-duration: 8s;"></div>
+    <div class="absolute bottom-20 right-1/3 w-88 h-88 bg-gradient-to-br from-orange-400/15 to-red-500/15 rounded-full filter blur-3xl animate-float opacity-50" style="animation-delay: 3.5s; animation-duration: 10s;"></div>
+    <div class="absolute top-1/2 right-1/4 w-56 h-56 bg-gradient-to-br from-indigo-400/15 to-purple-500/15 rounded-full filter blur-3xl animate-float opacity-55" style="animation-delay: 5.5s; animation-duration: 7s;"></div>
+    
+    <!-- Geometric Glass Shapes with Enhanced Movement -->
+    <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-br from-blue-300/30 to-purple-400/30 rounded-3xl rotate-45 filter blur-xl animate-float opacity-40" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-40 right-40 w-32 h-32 bg-gradient-to-br from-purple-300/30 to-pink-400/30 rounded-2xl rotate-12 filter blur-xl animate-float opacity-50" style="animation-delay: 3s;"></div>
+    <div class="absolute top-1/2 left-10 w-24 h-24 bg-gradient-to-br from-cyan-300/30 to-blue-400/30 rounded-xl rotate-45 filter blur-lg animate-float opacity-60" style="animation-delay: 5s;"></div>
+    
+    <!-- Enhanced Grid Pattern with Movement -->
+    <div class="absolute inset-0 opacity-[0.02] animate-pulse-slow" style="background-image: radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.5) 1px, transparent 0); background-size: 60px 60px;"></div>
+    
+    <!-- Floating Particles -->
+    <div class="absolute top-1/4 left-1/3 w-2 h-2 bg-blue-400/40 rounded-full animate-pulse-slow"></div>
+    <div class="absolute top-1/2 right-1/3 w-1 h-1 bg-purple-400/60 rounded-full animate-pulse-slow" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-1/3 left-1/2 w-3 h-3 bg-cyan-400/30 rounded-full animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/6 right-1/6 w-2 h-2 bg-emerald-400/50 rounded-full animate-pulse-slow" style="animation-delay: 3s;"></div>
+    <div class="absolute bottom-1/6 left-1/6 w-1 h-1 bg-orange-400/40 rounded-full animate-pulse-slow" style="animation-delay: 4s;"></div>
   </div>
 
-  <!-- Summary Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-      <div class="flex items-center">
-        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="relative page-header mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-4xl lg:text-5xl font-bold text-gradient-hero mb-2">Claim Management</h1>
+          <p class="text-xl text-slate-600">Manage and process all insurance claims</p>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button 
+            (click)="loadClaims()" 
+            class="btn-glass group"
+            [disabled]="loading">
+            <svg class="w-4 h-4 mr-2 group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Refresh
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <!-- Total Claims -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ getClaimSummary().total }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Total Claims</div>
+              <div class="text-sm text-slate-500 mt-2">
+                All submitted claims
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Claims -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ getClaimSummary().pending }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Pending</div>
+              <div class="text-sm text-slate-500 mt-2">
+                Awaiting review
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Approved Claims -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-glow-accent group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ getClaimSummary().approved }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Approved</div>
+              <div class="text-sm text-slate-500 mt-2">
+                Successfully processed
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rejected Claims -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ getClaimSummary().rejected }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Rejected</div>
+              <div class="text-sm text-slate-500 mt-2">
+                Not approved
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters and Search -->
+    <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden mb-8">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="relative p-6">
+        <div class="flex items-center mb-4">
+          <svg class="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
+          <h3 class="text-xl font-bold text-slate-900">Search & Filter Claims</h3>
         </div>
-        <div class="ml-4">
-          <div class="text-2xl font-bold text-gray-900">{{ getClaimSummary().total }}</div>
-          <div class="text-sm text-gray-600">Total Claims</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-2">Status</label>
+            <select [(ngModel)]="filters.status" (ngModelChange)="onFilterChange()" class="select select-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+              <option value="">All Status</option>
+              <option value="PENDING">Pending</option>
+              <option value="APPROVED">Approved</option>
+              <option value="REJECTED">Rejected</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-2">From Date</label>
+            <input
+              type="date"
+              [(ngModel)]="filters.dateFrom"
+              (ngModelChange)="onFilterChange()"
+              class="input input-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-2">To Date</label>
+            <input
+              type="date"
+              [(ngModel)]="filters.dateTo"
+              (ngModelChange)="onFilterChange()"
+              class="input input-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-2">Min Amount</label>
+            <input
+              type="number"
+              [(ngModel)]="filters.amountMin"
+              (ngModelChange)="onFilterChange()"
+              placeholder="Min amount"
+              class="input input-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-2">Max Amount</label>
+            <input
+              type="number"
+              [(ngModel)]="filters.amountMax"
+              (ngModelChange)="onFilterChange()"
+              placeholder="Max amount"
+              class="input input-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-2">Search</label>
+            <input
+              type="text"
+              [(ngModel)]="filters.search"
+              (ngModelChange)="onFilterChange()"
+              placeholder="Search claims..."
+              class="input input-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+          </div>
+        </div>
+
+        <div class="flex gap-3 mt-6 items-center">
+          <button (click)="applyFilters()" class="btn-primary group hover:scale-105 transition-all duration-300">
+            <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            Apply Filters
+          </button>
+          <button (click)="clearFilters()" class="btn-glass group hover:scale-105 transition-all duration-300">
+            <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+            Clear
+          </button>
+          <div *ngIf="getActiveFilterCount() > 0" class="text-sm text-slate-600 ml-2 px-3 py-1 bg-blue-50 rounded-full">
+            {{ getActiveFilterCount() }} filter(s) active
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-      <div class="flex items-center">
-        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-        </div>
-        <div class="ml-4">
-          <div class="text-2xl font-bold text-gray-900">{{ getClaimSummary().pending }}</div>
-          <div class="text-sm text-gray-600">Pending</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-      <div class="flex items-center">
-        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-          </svg>
-        </div>
-        <div class="ml-4">
-          <div class="text-2xl font-bold text-gray-900">{{ getClaimSummary().approved }}</div>
-          <div class="text-sm text-gray-600">Approved</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-      <div class="flex items-center">
-        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </div>
-        <div class="ml-4">
-          <div class="text-2xl font-bold text-gray-900">{{ getClaimSummary().rejected }}</div>
-          <div class="text-sm text-gray-600">Rejected</div>
+    <!-- Bulk Actions -->
+    <div *ngIf="selectedClaims.length > 0" class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden mb-8">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="relative p-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-glow">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <span class="text-lg font-semibold text-slate-900">
+                {{ selectedClaims.length }} claim(s) selected
+              </span>
+            </div>
+            <select [(ngModel)]="bulkAction" class="select select-bordered select-sm bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+              <option value="">Select Action</option>
+              <option value="APPROVED">Approve Selected</option>
+              <option value="REJECTED">Reject Selected</option>
+            </select>
+            <button (click)="performBulkAction()" class="btn-primary group hover:scale-105 transition-all duration-300">
+              <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Apply Action
+            </button>
+          </div>
+          <button (click)="selectedClaims = []" class="btn-glass group hover:scale-105 transition-all duration-300">
+            <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+            Clear Selection
+          </button>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Filters and Search -->
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-        <select [(ngModel)]="filters.status" (ngModelChange)="onFilterChange()" class="select select-bordered w-full">
-          <option value="">All Status</option>
-          <option value="PENDING">Pending</option>
-          <option value="APPROVED">Approved</option>
-          <option value="REJECTED">Rejected</option>
-        </select>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">From Date</label>
-        <input
-          type="date"
-          [(ngModel)]="filters.dateFrom"
-          (ngModelChange)="onFilterChange()"
-          class="input input-bordered w-full">
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">To Date</label>
-        <input
-          type="date"
-          [(ngModel)]="filters.dateTo"
-          (ngModelChange)="onFilterChange()"
-          class="input input-bordered w-full">
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Min Amount</label>
-        <input
-          type="number"
-          [(ngModel)]="filters.amountMin"
-          (ngModelChange)="onFilterChange()"
-          placeholder="Min amount"
-          class="input input-bordered w-full">
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Max Amount</label>
-        <input
-          type="number"
-          [(ngModel)]="filters.amountMax"
-          (ngModelChange)="onFilterChange()"
-          placeholder="Max amount"
-          class="input input-bordered w-full">
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-        <input
-          type="text"
-          [(ngModel)]="filters.search"
-          (ngModelChange)="onFilterChange()"
-          placeholder="Search claims..."
-          class="input input-bordered w-full">
-      </div>
-    </div>
-
-    <div class="flex gap-2 mt-4 items-center">
-      <button (click)="applyFilters()" class="btn btn-primary btn-sm">
-        Apply Filters
-      </button>
-      <button (click)="clearFilters()" class="btn btn-outline btn-sm">
-        Clear
-      </button>
-      <div *ngIf="getActiveFilterCount() > 0" class="text-sm text-gray-600 ml-2">
-        {{ getActiveFilterCount() }} filter(s) active
-      </div>
-    </div>
-  </div>
-
-  <!-- Bulk Actions -->
-  <div *ngIf="selectedClaims.length > 0" class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <span class="text-sm font-medium text-blue-900">
-          {{ selectedClaims.length }} claim(s) selected
-        </span>
-        <select [(ngModel)]="bulkAction" class="select select-bordered select-sm">
-          <option value="">Select Action</option>
-          <option value="APPROVED">Approve Selected</option>
-          <option value="REJECTED">Reject Selected</option>
-        </select>
-        <button (click)="performBulkAction()" class="btn btn-primary btn-sm">
-          Apply Action
-        </button>
-      </div>
-      <button (click)="selectedClaims = []" class="btn btn-ghost btn-sm">
-        Clear Selection
-      </button>
-    </div>
-  </div>
 
   <!-- Loading State -->
   <div *ngIf="loading" class="flex justify-center items-center py-12">
@@ -187,191 +285,234 @@
     <span>{{ error }}</span>
   </div>
 
-  <!-- Claims Table -->
-  <div *ngIf="!loading && !error" class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-    <div class="overflow-x-auto">
-      <table class="table table-zebra w-full">
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                [checked]="selectedClaims.length === claims.length && claims.length > 0"
-                (change)="selectAllClaims()"
-                class="checkbox checkbox-sm">
-            </th>
-            <th>Claim ID</th>
-            <th>Customer</th>
-            <th>Policy</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th>Incident Date</th>
-            <th>Created</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let claim of claims" class="hover">
-            <td>
-              <input
-                type="checkbox"
-                [checked]="isClaimSelected(claim._id)"
-                (change)="selectClaim(claim._id)"
-                class="checkbox checkbox-sm">
-            </td>
-            <td>
-              <div class="font-mono text-sm">{{ claim._id.slice(-8) }}</div>
-            </td>
-            <td>
-              <div>
-                <div class="font-medium">{{ getClaimUserName(claim) }}</div>
-                <div class="text-sm text-gray-500">{{ getClaimUserEmail(claim) }}</div>
-              </div>
-            </td>
-            <td>
-              <div>
-                <div class="font-medium">{{ getClaimPolicyTitle(claim) }}</div>
-                <div class="text-sm text-gray-500">{{ getClaimPolicyCode(claim) }}</div>
-              </div>
-            </td>
-            <td>
-              <div class="font-medium">{{ formatCurrency(claim.amountClaimed) }}</div>
-            </td>
-            <td>
-              <div class="badge" [ngClass]="getStatusColor(claim.status)">
-                <span class="mr-1">{{ getStatusIcon(claim.status) }}</span>
-                {{ claim.status }}
-              </div>
-            </td>
-            <td>
-              <div class="text-sm">{{ formatDate(claim.incidentDate) }}</div>
-            </td>
-            <td>
-              <div class="text-sm text-gray-600">{{ formatDate(claim.createdAt) }}</div>
-            </td>
-            <td>
-              <div class="flex gap-1">
-                <button
-                  (click)="openStatusModal(claim)"
-                  class="btn btn-ghost btn-xs">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                  </svg>
-                  Update
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Claims Table -->
+    <div *ngIf="!loading && !error" class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="relative">
+        <div class="px-6 py-4 border-b border-white/20 bg-glass-white backdrop-blur-sm">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-bold text-slate-900 flex items-center">
+              <svg class="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              Claims Management
+            </h3>
+            <div class="text-sm text-slate-500">
+              {{ claims.length }} claim(s) found
+            </div>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="table w-full">
+            <thead class="bg-glass-white backdrop-blur-sm">
+              <tr>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <input
+                    type="checkbox"
+                    [checked]="selectedClaims.length === claims.length && claims.length > 0"
+                    (change)="selectAllClaims()"
+                    class="checkbox checkbox-sm">
+                </th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Claim ID</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Customer</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Policy</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Amount</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Incident Date</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Created</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white/50 backdrop-blur-sm divide-y divide-white/20">
+              <tr *ngFor="let claim of claims" class="hover:bg-white/70 transition-all duration-300 group">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <input
+                    type="checkbox"
+                    [checked]="isClaimSelected(claim._id)"
+                    (change)="selectClaim(claim._id)"
+                    class="checkbox checkbox-sm">
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="font-mono text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors duration-200">{{ claim._id.slice(-8) }}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div>
+                    <div class="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors duration-200">{{ getClaimUserName(claim) }}</div>
+                    <div class="text-sm text-slate-500">{{ getClaimUserEmail(claim) }}</div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div>
+                    <div class="font-medium text-slate-900">{{ getClaimPolicyTitle(claim) }}</div>
+                    <div class="text-sm text-slate-500">{{ getClaimPolicyCode(claim) }}</div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-lg font-bold text-slate-900 group-hover:text-green-600 transition-colors duration-200">{{ formatCurrency(claim.amountClaimed) }}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium" [ngClass]="getStatusColor(claim.status)">
+                    <span class="mr-1">{{ getStatusIcon(claim.status) }}</span>
+                    {{ claim.status }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                  {{ formatDate(claim.incidentDate) }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                  {{ formatDate(claim.createdAt) }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <button
+                    (click)="openStatusModal(claim)"
+                    class="btn btn-ghost btn-sm hover:scale-110 transition-transform duration-200 group">
+                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                    Update
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="claims.length === 0" class="text-center py-16">
+          <div class="w-20 h-20 bg-gradient-to-br from-slate-300 to-slate-400 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-glow">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-3">No claims found</h3>
+          <p class="text-slate-600 mb-6">Try adjusting your search criteria or check back later for new claims.</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Empty State -->
-    <div *ngIf="claims.length === 0" class="text-center py-12">
-      <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-      </svg>
-      <h3 class="text-lg font-medium text-gray-900 mb-2">No claims found</h3>
-      <p class="text-gray-600">Try adjusting your search criteria.</p>
+    <!-- Pagination -->
+    <div *ngIf="!loading && !error && pagination.pages > 1" class="flex justify-center mt-8">
+      <div class="join">
+        <button
+          (click)="goToPage(pagination.page - 1)"
+          [disabled]="pagination.page <= 1"
+          class="join-item btn btn-sm btn-glass">
+          Previous
+        </button>
+        
+        <button
+          *ngFor="let page of getTotalPages()"
+          (click)="goToPage(page)"
+          [class.btn-active]="page === pagination.page"
+          class="join-item btn btn-sm btn-glass">
+          {{ page }}
+        </button>
+        
+        <button
+          (click)="goToPage(pagination.page + 1)"
+          [disabled]="pagination.page >= pagination.pages"
+          class="join-item btn btn-sm btn-glass">
+          Next
+        </button>
+      </div>
     </div>
-  </div>
 
-  <!-- Pagination -->
-  <div *ngIf="!loading && !error && pagination.pages > 1" class="flex justify-center mt-6">
-    <div class="join">
-      <button
-        (click)="goToPage(pagination.page - 1)"
-        [disabled]="pagination.page <= 1"
-        class="join-item btn btn-sm">
-        Previous
-      </button>
-      
-      <button
-        *ngFor="let page of getTotalPages()"
-        (click)="goToPage(page)"
-        [class.btn-active]="page === pagination.page"
-        class="join-item btn btn-sm">
-        {{ page }}
-      </button>
-      
-      <button
-        (click)="goToPage(pagination.page + 1)"
-        [disabled]="pagination.page >= pagination.pages"
-        class="join-item btn btn-sm">
-        Next
-      </button>
+    <!-- Pagination Info -->
+    <div *ngIf="!loading && !error" class="text-center text-sm text-slate-600 mt-4">
+      Showing {{ (pagination.page - 1) * pagination.limit + 1 }} to 
+      {{ Math.min(pagination.page * pagination.limit, pagination.total) }} of 
+      {{ pagination.total }} claims
     </div>
-  </div>
-
-  <!-- Pagination Info -->
-  <div *ngIf="!loading && !error" class="text-center text-sm text-gray-600 mt-4">
-    Showing {{ (pagination.page - 1) * pagination.limit + 1 }} to 
-    {{ Math.min(pagination.page * pagination.limit, pagination.total) }} of 
-    {{ pagination.total }} claims
   </div>
 </div>
 
 <!-- Status Update Modal -->
-<div *ngIf="showStatusModal && editingClaim" class="modal modal-open">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg mb-4">Update Claim Status</h3>
-    
-    <div class="space-y-4">
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Claim ID</label>
-        <div class="font-mono text-sm bg-gray-100 p-2 rounded">{{ editingClaim._id.slice(-8) }}</div>
+<div *ngIf="showStatusModal && editingClaim" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" (click)="closeStatusModal()"></div>
+  <div class="relative bg-glass-white backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold text-gradient-hero flex items-center">
+          <svg class="w-6 h-6 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+          </svg>
+          Update Claim Status
+        </h3>
+        <button (click)="closeStatusModal()" class="btn btn-ghost btn-sm hover:scale-110 transition-transform duration-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-2">Claim ID</label>
+            <div class="font-mono text-sm bg-glass-white border border-white/20 backdrop-blur-sm p-3 rounded-lg">{{ editingClaim._id.slice(-8) }}</div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-2">Amount</label>
+            <div class="text-lg font-bold text-slate-900">{{ formatCurrency(editingClaim.amountClaimed) }}</div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-2">Customer</label>
+          <div class="text-sm bg-glass-white border border-white/20 backdrop-blur-sm p-3 rounded-lg">
+            <div class="font-semibold text-slate-900">{{ getClaimUserName(editingClaim) }}</div>
+            <div class="text-slate-500">{{ getClaimUserEmail(editingClaim) }}</div>
+          </div>
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium text-slate-700">Status *</span>
+          </label>
+          <select
+            [(ngModel)]="statusUpdate.status"
+            name="status"
+            class="select select-bordered bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+            <option value="PENDING">Pending</option>
+            <option value="APPROVED">Approved</option>
+            <option value="REJECTED">Rejected</option>
+          </select>
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium text-slate-700">Decision Notes</span>
+          </label>
+          <textarea
+            [(ngModel)]="statusUpdate.notes"
+            name="notes"
+            class="textarea textarea-bordered bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+            rows="3"
+            placeholder="Add notes about the decision..."></textarea>
+        </div>
       </div>
 
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Customer</label>
-          <div class="text-sm">{{ getClaimUserName(editingClaim) }} ({{ getClaimUserEmail(editingClaim) }})</div>
+      <div class="modal-action pt-6">
+        <button
+          type="button"
+          (click)="closeStatusModal()"
+          class="btn-glass group hover:scale-105 transition-all duration-300">
+          <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+          Cancel
+        </button>
+        <button
+          type="button"
+          (click)="updateClaimStatus()"
+          class="btn-primary group hover:scale-105 transition-all duration-300">
+          <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          Update Status
+        </button>
       </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
-        <div class="text-sm font-medium">{{ formatCurrency(editingClaim.amountClaimed) }}</div>
-      </div>
-
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text">Status</span>
-        </label>
-        <select
-          [(ngModel)]="statusUpdate.status"
-          name="status"
-          class="select select-bordered">
-          <option value="PENDING">Pending</option>
-          <option value="APPROVED">Approved</option>
-          <option value="REJECTED">Rejected</option>
-        </select>
-      </div>
-
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text">Decision Notes</span>
-        </label>
-        <textarea
-          [(ngModel)]="statusUpdate.notes"
-          name="notes"
-          class="textarea textarea-bordered"
-          rows="3"
-          placeholder="Add notes about the decision..."></textarea>
-      </div>
-    </div>
-
-    <div class="modal-action">
-      <button
-        type="button"
-        (click)="closeStatusModal()"
-        class="btn btn-ghost">
-        Cancel
-      </button>
-      <button
-        type="button"
-        (click)="updateClaimStatus()"
-        class="btn btn-primary">
-        Update Status
-      </button>
     </div>
   </div>
 </div>

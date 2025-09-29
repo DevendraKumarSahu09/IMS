@@ -1,106 +1,180 @@
-<div class="container mx-auto px-4 py-6">
-  <!-- Header -->
-  <div class="flex justify-between items-center mb-6">
+<div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50">
+  <!-- Advanced Abstract Background Elements -->
+  <div class="absolute inset-0 overflow-hidden">
+    <!-- Floating Glass Orbs with Enhanced Movement -->
+    <div class="absolute -top-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full filter blur-3xl animate-float opacity-70"></div>
+    <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-pink-500/20 rounded-full filter blur-3xl animate-float opacity-60" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full filter blur-3xl animate-float opacity-50" style="animation-delay: 4s;"></div>
+    
+    <!-- Dynamic Moving Blur Effects -->
+    <div class="absolute top-10 left-1/4 w-72 h-72 bg-gradient-to-br from-emerald-400/15 to-teal-500/15 rounded-full filter blur-3xl animate-float opacity-60" style="animation-delay: 1.5s; animation-duration: 8s;"></div>
+    <div class="absolute bottom-20 right-1/3 w-88 h-88 bg-gradient-to-br from-orange-400/15 to-red-500/15 rounded-full filter blur-3xl animate-float opacity-50" style="animation-delay: 3.5s; animation-duration: 10s;"></div>
+    <div class="absolute top-1/2 right-1/4 w-56 h-56 bg-gradient-to-br from-indigo-400/15 to-purple-500/15 rounded-full filter blur-3xl animate-float opacity-55" style="animation-delay: 5.5s; animation-duration: 7s;"></div>
+    
+    <!-- Geometric Glass Shapes with Enhanced Movement -->
+    <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-br from-blue-300/30 to-purple-400/30 rounded-3xl rotate-45 filter blur-xl animate-float opacity-40" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-40 right-40 w-32 h-32 bg-gradient-to-br from-purple-300/30 to-pink-400/30 rounded-2xl rotate-12 filter blur-xl animate-float opacity-50" style="animation-delay: 3s;"></div>
+    <div class="absolute top-1/2 left-10 w-24 h-24 bg-gradient-to-br from-cyan-300/30 to-blue-400/30 rounded-xl rotate-45 filter blur-lg animate-float opacity-60" style="animation-delay: 5s;"></div>
+    
+    <!-- Enhanced Grid Pattern with Movement -->
+    <div class="absolute inset-0 opacity-[0.02] animate-pulse-slow" style="background-image: radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.5) 1px, transparent 0); background-size: 60px 60px;"></div>
+    
+    <!-- Floating Particles -->
+    <div class="absolute top-1/4 left-1/3 w-2 h-2 bg-blue-400/40 rounded-full animate-pulse-slow"></div>
+    <div class="absolute top-1/2 right-1/3 w-1 h-1 bg-purple-400/60 rounded-full animate-pulse-slow" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-1/3 left-1/2 w-3 h-3 bg-cyan-400/30 rounded-full animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/6 right-1/6 w-2 h-2 bg-emerald-400/50 rounded-full animate-pulse-slow" style="animation-delay: 3s;"></div>
+    <div class="absolute bottom-1/6 left-1/6 w-1 h-1 bg-orange-400/40 rounded-full animate-pulse-slow" style="animation-delay: 4s;"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="relative page-header mb-8">
+      <div class="flex items-center justify-between">
     <div>
-      <h1 class="text-3xl font-bold text-gray-900">User Management</h1>
-      <p class="text-gray-600 mt-1">Manage agents, admins, and their assignments</p>
+          <h1 class="text-4xl lg:text-5xl font-bold text-gradient-hero mb-2">User Management</h1>
+          <p class="text-xl text-slate-600">Manage agents, admins, and their assignments</p>
     </div>
-    <div class="flex gap-2">
+        <div class="flex items-center space-x-4">
       <button 
         (click)="openAddUserModal()" 
-        class="btn btn-primary">
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="btn-glass group">
+            <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
         </svg>
         Add Agent/Admin
       </button>
           <button
             (click)="loadUsers()"
-            class="btn btn-outline"
+            class="btn-glass group"
             [disabled]="loading">
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 mr-2 group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
             </svg>
             Refresh
           </button>
+        </div>
     </div>
   </div>
 
   <!-- Statistics Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <!-- Total Users -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
       <div class="flex items-center">
-        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
           </svg>
         </div>
-        <div class="ml-4">
-          <div class="text-2xl font-bold text-gray-900">{{ getUserStats().total }}</div>
-          <div class="text-sm text-gray-600">Total Users</div>
-        </div>
+            </div>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ getUserStats().total }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Total Users</div>
+              <div class="text-sm text-slate-500 mt-2">
+                All registered users
+              </div>
+            </div>
+          </div>
       </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <!-- Agents -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
       <div class="flex items-center">
-        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-glow-accent group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
           </svg>
         </div>
-        <div class="ml-4">
-          <div class="text-2xl font-bold text-gray-900">{{ getUserStats().agents }}</div>
-          <div class="text-sm text-gray-600">Agents</div>
-        </div>
+            </div>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ getUserStats().agents }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Agents</div>
+              <div class="text-sm text-slate-500 mt-2">
+                Active insurance agents
+              </div>
+            </div>
+          </div>
       </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <!-- Admins -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
       <div class="flex items-center">
-        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-glow-secondary group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
           </svg>
         </div>
-        <div class="ml-4">
-          <div class="text-2xl font-bold text-gray-900">{{ getUserStats().admins }}</div>
-          <div class="text-sm text-gray-600">Admins</div>
-        </div>
+            </div>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ getUserStats().admins }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Admins</div>
+              <div class="text-sm text-slate-500 mt-2">
+                System administrators
+              </div>
+            </div>
+          </div>
       </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <!-- Customers -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
       <div class="flex items-center">
-        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
           </svg>
         </div>
-        <div class="ml-4">
-          <div class="text-2xl font-bold text-gray-900">{{ getUserStats().customers }}</div>
-          <div class="text-sm text-gray-600">Customers</div>
-        </div>
+            </div>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ getUserStats().customers }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Customers</div>
+              <div class="text-sm text-slate-500 mt-2">
+                Policy holders
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   </div>
 
   <!-- Search and Filters -->
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden mb-8">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="relative p-6">
+        <div class="flex items-center mb-4">
+          <svg class="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <h3 class="text-xl font-bold text-slate-900">Search & Filter Users</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+            <label class="block text-sm font-medium text-slate-700 mb-2">Search Users</label>
         <div class="relative">
           <input
             type="text"
             [(ngModel)]="searchQuery"
             (ngModelChange)="onSearchChange()"
-            placeholder="Search users..."
-            class="input input-bordered w-full pr-10">
+                placeholder="Search by name, email..."
+                class="input input-bordered w-full pr-12 bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
           <button
             (click)="searchUsers()"
-            class="absolute right-2 top-1/2 transform -translate-y-1/2 btn btn-ghost btn-sm">
+                class="absolute right-3 top-1/2 transform -translate-y-1/2 btn btn-ghost btn-sm hover:scale-110 transition-transform duration-200">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
@@ -109,8 +183,8 @@
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
-        <select [(ngModel)]="filters.role" (ngModelChange)="onFilterChange()" class="select select-bordered w-full">
+            <label class="block text-sm font-medium text-slate-700 mb-2">Filter by Role</label>
+            <select [(ngModel)]="filters.role" (ngModelChange)="onFilterChange()" class="select select-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
           <option value="">All Roles</option>
           <option value="admin">Admin</option>
           <option value="agent">Agent</option>
@@ -118,20 +192,26 @@
         </select>
       </div>
 
-
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Actions</label>
-        <div class="flex gap-2">
+            <label class="block text-sm font-medium text-slate-700 mb-2">Actions</label>
+            <div class="flex gap-3">
           <button
             (click)="searchUsers()"
-            class="btn btn-primary btn-sm flex-1">
+                class="btn-primary flex-1 group hover:scale-105 transition-all duration-300">
+                <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
             Apply
           </button>
           <button
             (click)="clearFilters()"
-            class="btn btn-outline btn-sm">
+                class="btn-glass group hover:scale-105 transition-all duration-300">
+                <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
             Clear
           </button>
+            </div>
         </div>
       </div>
     </div>
@@ -172,76 +252,96 @@
   </div>
 
   <!-- Users Table -->
-  <div *ngIf="!loading && !error" class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div *ngIf="!loading && !error" class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="relative">
+        <div class="px-6 py-4 border-b border-white/20 bg-glass-white backdrop-blur-sm">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-bold text-slate-900 flex items-center">
+              <svg class="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+              </svg>
+              Users Management
+            </h3>
+            <div class="text-sm text-slate-500">
+              {{ users.length }} user(s) found
+            </div>
+          </div>
+        </div>
     <div class="overflow-x-auto">
-      <table class="table table-zebra w-full">
-        <thead>
+          <table class="table w-full">
+            <thead class="bg-glass-white backdrop-blur-sm">
           <tr>
-            <th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
               <input
                 type="checkbox"
                 [checked]="selectedUsers.length === users.length && users.length > 0"
                 (change)="selectAllUsers()"
                 class="checkbox checkbox-sm">
             </th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Assigned Claims</th>
-            <th>Created</th>
-            <th>Actions</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Name</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Email</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Role</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Assigned Claims</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Created</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let user of users" class="hover">
-            <td>
+            <tbody class="bg-white/50 backdrop-blur-sm divide-y divide-white/20">
+              <tr *ngFor="let user of users" class="hover:bg-white/70 transition-all duration-300 group">
+                <td class="px-6 py-4 whitespace-nowrap">
               <input
                 type="checkbox"
                 [checked]="isUserSelected(user._id)"
                 (change)="selectUser(user._id)"
                 class="checkbox checkbox-sm">
             </td>
-            <td>
-              <div class="flex items-center gap-3">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center gap-4">
                 <div class="avatar placeholder">
-                  <div class="bg-neutral text-neutral-content rounded-full w-10">
-                    <span class="text-sm font-medium">{{ user.name.charAt(0).toUpperCase() }}</span>
+                      <div class="bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                        <span class="text-lg font-semibold">{{ user.name.charAt(0).toUpperCase() }}</span>
                   </div>
                 </div>
                 <div>
-                  <div class="font-medium">{{ user.name }}</div>
-                  <div class="text-sm text-gray-500">ID: {{ user._id.slice(-8) }}</div>
+                      <div class="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors duration-200">{{ user.name }}</div>
+                      <div class="text-sm text-slate-500">ID: {{ user._id.slice(-8) }}</div>
                 </div>
               </div>
             </td>
-            <td>
-              <div class="text-sm">{{ user.email }}</div>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-slate-900">{{ user.email }}</div>
             </td>
-            <td>
-              <div class="badge" [ngClass]="getRoleColor(user.role)">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium" 
+                        [class]="getRoleColor(user.role)">
+                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
                 {{ getRoleDisplay(user.role) }}
-              </div>
+                  </span>
             </td>
-            <td>
-              <div class="text-sm text-gray-600">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-800">
+                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
                 {{ getUserStats(user).assignedClaims || 0 }}
-              </div>
+                  </span>
             </td>
-            <td>
-              <div class="text-sm text-gray-600">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                 {{ formatDate(user.createdAt) }}
-              </div>
             </td>
-            <td>
+                <td class="px-6 py-4 whitespace-nowrap">
               <div class="dropdown dropdown-end">
-                <div tabindex="0" role="button" class="btn btn-ghost btn-xs">
+                    <div tabindex="0" role="button" class="btn btn-ghost btn-sm hover:scale-110 transition-transform duration-200">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
                   </svg>
                 </div>
-                <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-glass-white backdrop-blur-sm rounded-2xl border border-white/20 w-52">
                   <li>
-                    <button (click)="editUser(user)" class="text-sm">
+                        <button (click)="editUser(user)" class="text-sm hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 rounded-lg">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                       </svg>
@@ -249,7 +349,7 @@
                     </button>
                   </li>
                   <li *ngIf="user.role === 'agent'">
-                    <button (click)="assignPolicy(user)" class="text-sm">
+                        <button (click)="assignPolicy(user)" class="text-sm hover:bg-green-50 hover:text-green-700 transition-colors duration-200 rounded-lg">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                       </svg>
@@ -257,7 +357,7 @@
                     </button>
                   </li>
                   <li *ngIf="user.role === 'agent'">
-                    <button (click)="assignClaim(user)" class="text-sm">
+                        <button (click)="assignClaim(user)" class="text-sm hover:bg-orange-50 hover:text-orange-700 transition-colors duration-200 rounded-lg">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                       </svg>
@@ -265,7 +365,7 @@
                     </button>
                   </li>
                   <li *ngIf="canDeleteUser(user)" class="text-error">
-                    <button (click)="deleteUser(user)" class="text-sm text-error">
+                        <button (click)="deleteUser(user)" class="text-sm text-error hover:bg-red-50 hover:text-red-700 transition-colors duration-200 rounded-lg">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                       </svg>
@@ -281,22 +381,31 @@
     </div>
 
     <!-- Empty State -->
-    <div *ngIf="users.length === 0" class="text-center py-12">
-      <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div *ngIf="users.length === 0" class="text-center py-16">
+          <div class="w-20 h-20 bg-gradient-to-br from-slate-300 to-slate-400 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-glow">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
       </svg>
-      <h3 class="text-lg font-medium text-gray-900 mb-2">No users found</h3>
-      <p class="text-gray-600">Try adjusting your search criteria or create a new user.</p>
-    </div>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-3">No users found</h3>
+          <p class="text-slate-600 mb-6">Try adjusting your search criteria or create a new user.</p>
+          <button (click)="openAddUserModal()" class="btn-primary group hover:scale-105 transition-all duration-300">
+            <svg class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Add First User
+          </button>
+        </div>
+      </div>
   </div>
 
   <!-- Pagination -->
-  <div *ngIf="!loading && !error && pagination.pages > 1" class="flex justify-center mt-6">
+    <div *ngIf="!loading && !error && pagination.pages > 1" class="flex justify-center mt-8">
     <div class="join">
       <button
         (click)="goToPage(pagination.page - 1)"
         [disabled]="pagination.page <= 1"
-        class="join-item btn btn-sm">
+          class="join-item btn btn-sm btn-glass">
         Previous
       </button>
       
@@ -304,178 +413,241 @@
         *ngFor="let page of getTotalPages()"
         (click)="goToPage(page)"
         [class.btn-active]="page === pagination.page"
-        class="join-item btn btn-sm">
+          class="join-item btn btn-sm btn-glass">
         {{ page }}
       </button>
       
       <button
         (click)="goToPage(pagination.page + 1)"
         [disabled]="pagination.page >= pagination.pages"
-        class="join-item btn btn-sm">
+          class="join-item btn btn-sm btn-glass">
         Next
       </button>
     </div>
   </div>
 
   <!-- Pagination Info -->
-  <div *ngIf="!loading && !error" class="text-center text-sm text-gray-600 mt-4">
+    <div *ngIf="!loading && !error" class="text-center text-sm text-slate-600 mt-4">
     Showing {{ (pagination.page - 1) * pagination.limit + 1 }} to 
     {{ Math.min(pagination.page * pagination.limit, pagination.total) }} of 
     {{ pagination.total }} users
+    </div>
   </div>
 </div>
 
 <!-- Add User Modal -->
-<div *ngIf="showAddForm" class="modal modal-open">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg mb-4">Add New User</h3>
+<div *ngIf="showAddForm" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" (click)="cancelAdd()"></div>
+  <div class="relative bg-glass-white backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold text-gradient-hero flex items-center">
+          <svg class="w-6 h-6 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+          Add New User
+        </h3>
+      <button (click)="cancelAdd()" class="btn btn-ghost btn-sm hover:scale-110 transition-transform duration-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
     
-    <form (ngSubmit)="addUser()" class="space-y-4">
+    <form (ngSubmit)="addUser()" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="form-control">
         <label class="label">
-          <span class="label-text">Name</span>
+            <span class="label-text font-medium text-slate-700">Name *</span>
         </label>
         <input
           type="text"
           [(ngModel)]="newUser.name"
           name="name"
-          class="input input-bordered"
+            class="input input-bordered bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+            placeholder="Enter full name"
           required>
       </div>
 
       <div class="form-control">
         <label class="label">
-          <span class="label-text">Email</span>
+            <span class="label-text font-medium text-slate-700">Email *</span>
         </label>
         <input
           type="email"
           [(ngModel)]="newUser.email"
           name="email"
-          class="input input-bordered"
+            class="input input-bordered bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+            placeholder="Enter email address"
           required>
+        </div>
       </div>
 
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="form-control">
         <label class="label">
-          <span class="label-text">Password</span>
+            <span class="label-text font-medium text-slate-700">Password *</span>
         </label>
         <input
           type="password"
           [(ngModel)]="newUser.password"
           name="password"
-          class="input input-bordered"
+            class="input input-bordered bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+            placeholder="Enter password"
           required>
       </div>
 
       <div class="form-control">
         <label class="label">
-          <span class="label-text">Role</span>
+            <span class="label-text font-medium text-slate-700">Role *</span>
         </label>
         <select
           [(ngModel)]="newUser.role"
           name="role"
-          class="select select-bordered">
+            class="select select-bordered bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
           <option value="agent">Agent</option>
           <option value="admin">Admin</option>
         </select>
       </div>
-
-      <div class="form-control">
       </div>
 
-      <div class="modal-action">
+      <div class="modal-action pt-6">
         <button
           type="button"
           (click)="cancelAdd()"
-          class="btn btn-ghost">
+          class="btn-glass group hover:scale-105 transition-all duration-300">
+          <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
           Cancel
         </button>
         <button
           type="submit"
-          class="btn btn-primary">
+          class="btn-primary group hover:scale-105 transition-all duration-300">
+          <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
           Add User
         </button>
       </div>
     </form>
+    </div>
   </div>
 </div>
 
 <!-- Edit User Modal -->
-<div *ngIf="showEditForm && editingUser" class="modal modal-open">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg mb-4">Edit User</h3>
+<div *ngIf="showEditForm && editingUser" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" (click)="cancelEdit()"></div>
+  <div class="relative bg-glass-white backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold text-gradient-hero flex items-center">
+          <svg class="w-6 h-6 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+          </svg>
+          Edit User
+        </h3>
+      <button (click)="cancelEdit()" class="btn btn-ghost btn-sm hover:scale-110 transition-transform duration-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
     
-    <form (ngSubmit)="updateUser()" class="space-y-4">
+    <form (ngSubmit)="updateUser()" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="form-control">
         <label class="label">
-          <span class="label-text">Name</span>
+            <span class="label-text font-medium text-slate-700">Name *</span>
         </label>
         <input
           type="text"
           [(ngModel)]="userUpdate.name"
           name="name"
-          class="input input-bordered"
+            class="input input-bordered bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+            placeholder="Enter full name"
           required>
       </div>
 
       <div class="form-control">
         <label class="label">
-          <span class="label-text">Email</span>
+            <span class="label-text font-medium text-slate-700">Email *</span>
         </label>
         <input
           type="email"
           [(ngModel)]="userUpdate.email"
           name="email"
-          class="input input-bordered"
+            class="input input-bordered bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+            placeholder="Enter email address"
           required>
+        </div>
       </div>
 
       <div class="form-control">
         <label class="label">
-          <span class="label-text">Role</span>
+          <span class="label-text font-medium text-slate-700">Role *</span>
         </label>
         <select
           [(ngModel)]="userUpdate.role"
           name="role"
-          class="select select-bordered">
+          class="select select-bordered bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
           <option value="customer">Customer</option>
           <option value="agent">Agent</option>
           <option value="admin">Admin</option>
         </select>
       </div>
 
-      <div class="form-control">
-      </div>
-
-      <div class="modal-action">
+      <div class="modal-action pt-6">
         <button
           type="button"
           (click)="cancelEdit()"
-          class="btn btn-ghost">
+          class="btn-glass group hover:scale-105 transition-all duration-300">
+          <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
           Cancel
         </button>
         <button
           type="submit"
-          class="btn btn-primary">
+          class="btn-primary group hover:scale-105 transition-all duration-300">
+          <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
           Update User
         </button>
       </div>
     </form>
+    </div>
   </div>
 </div>
 
 <!-- Policy Assignment Modal -->
-<div *ngIf="showPolicyAssignmentModal" class="modal modal-open">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg mb-4">Assign Policy to {{ selectedUserForAssignment?.name }}</h3>
+<div *ngIf="showPolicyAssignmentModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" (click)="closePolicyAssignmentModal()"></div>
+  <div class="relative bg-glass-white backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold text-gradient-hero flex items-center">
+          <svg class="w-6 h-6 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          Assign Policy to {{ selectedUserForAssignment?.name }}
+        </h3>
+      <button (click)="closePolicyAssignmentModal()" class="btn btn-ghost btn-sm hover:scale-110 transition-transform duration-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
     
-    <div class="form-control mb-4">
+    <div class="space-y-6">
+      <div class="form-control">
       <label class="label">
-        <span class="label-text">Select Policy</span>
+          <span class="label-text font-medium text-slate-700">Select Policy *</span>
       </label>
       <select 
         [(ngModel)]="selectedPolicyId" 
-        class="select select-bordered w-full">
+          class="select select-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200">
         <option value="">Choose a policy...</option>
         <option *ngFor="let policy of availablePolicies" [value]="policy._id">
           {{ policy.title }} - {{ policy.code }} (₹{{ policy.premium }}/month)
@@ -483,38 +655,67 @@
       </select>
     </div>
 
-    <div *ngIf="availablePolicies.length === 0" class="text-center text-gray-500 py-4">
-      No policies available for assignment
+      <div *ngIf="availablePolicies.length === 0" class="text-center py-8">
+        <div class="w-16 h-16 bg-gradient-to-br from-slate-300 to-slate-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </div>
+        <h4 class="text-lg font-semibold text-slate-900 mb-2">No Policies Available</h4>
+        <p class="text-slate-600">There are no policies available for assignment at the moment.</p>
     </div>
 
-    <div class="modal-action">
+      <div class="modal-action pt-6">
       <button 
         (click)="closePolicyAssignmentModal()" 
-        class="btn btn-ghost">
+          class="btn-glass group hover:scale-105 transition-all duration-300">
+          <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
         Cancel
       </button>
       <button 
         (click)="assignSelectedPolicy()" 
         [disabled]="!selectedPolicyId"
-        class="btn btn-primary">
-        Assign Policy
-      </button>
+          class="btn-primary group hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+          <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          Assign Policy
+        </button>
+      </div>
+    </div>
     </div>
   </div>
 </div>
 
 <!-- Claim Assignment Modal -->
-<div *ngIf="showClaimAssignmentModal" class="modal modal-open">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg mb-4">Assign Claim to {{ selectedUserForAssignment?.name }}</h3>
+<div *ngIf="showClaimAssignmentModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" (click)="closeClaimAssignmentModal()"></div>
+  <div class="relative bg-glass-white backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold text-gradient-hero flex items-center">
+          <svg class="w-6 h-6 mr-3 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+          </svg>
+          Assign Claim to {{ selectedUserForAssignment?.name }}
+        </h3>
+      <button (click)="closeClaimAssignmentModal()" class="btn btn-ghost btn-sm hover:scale-110 transition-transform duration-200">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
     
-    <div class="form-control mb-4">
+    <div class="space-y-6">
+      <div class="form-control">
       <label class="label">
-        <span class="label-text">Select Claim</span>
+          <span class="label-text font-medium text-slate-700">Select Claim *</span>
       </label>
       <select 
         [(ngModel)]="selectedClaimId" 
-        class="select select-bordered w-full">
+          class="select select-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200">
         <option value="">Choose a claim...</option>
         <option *ngFor="let claim of availableClaims" [value]="claim._id">
           Claim #{{ claim._id.substring(0, 8) }} - ₹{{ claim.amountClaimed }} - {{ claim.description.substring(0, 50) }}...
@@ -522,22 +723,36 @@
       </select>
     </div>
 
-    <div *ngIf="availableClaims.length === 0" class="text-center text-gray-500 py-4">
-      No unassigned claims available
+      <div *ngIf="availableClaims.length === 0" class="text-center py-8">
+        <div class="w-16 h-16 bg-gradient-to-br from-slate-300 to-slate-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+          </svg>
+        </div>
+        <h4 class="text-lg font-semibold text-slate-900 mb-2">No Claims Available</h4>
+        <p class="text-slate-600">There are no unassigned claims available for assignment at the moment.</p>
     </div>
 
-    <div class="modal-action">
+      <div class="modal-action pt-6">
       <button 
         (click)="closeClaimAssignmentModal()" 
-        class="btn btn-ghost">
+          class="btn-glass group hover:scale-105 transition-all duration-300">
+          <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
         Cancel
       </button>
       <button 
         (click)="assignSelectedClaim()" 
         [disabled]="!selectedClaimId"
-        class="btn btn-primary">
-        Assign Claim
-      </button>
+          class="btn-primary group hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+          <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          Assign Claim
+        </button>
+      </div>
+    </div>
     </div>
   </div>
 </div>

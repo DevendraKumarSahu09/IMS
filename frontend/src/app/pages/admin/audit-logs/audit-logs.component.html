@@ -1,85 +1,130 @@
-<div class="min-h-screen bg-gray-50 p-6">
-  <!-- Header -->
-  <div class="mb-8">
-    <div class="flex items-center justify-between">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-900">Audit Logs</h1>
-        <p class="text-gray-600 mt-2">Monitor system activity and user actions</p>
-      </div>
-      <button 
-        class="btn btn-outline"
-        (click)="exportLogs()">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-        </svg>
-        Export Logs
-      </button>
-    </div>
+<div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50">
+  <!-- Advanced Abstract Background Elements -->
+  <div class="absolute inset-0 overflow-hidden">
+    <!-- Floating Glass Orbs with Enhanced Movement -->
+    <div class="absolute -top-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full filter blur-3xl animate-float opacity-70"></div>
+    <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-pink-500/20 rounded-full filter blur-3xl animate-float opacity-60" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full filter blur-3xl animate-float opacity-50" style="animation-delay: 4s;"></div>
+    
+    <!-- Dynamic Moving Blur Effects -->
+    <div class="absolute top-10 left-1/4 w-72 h-72 bg-gradient-to-br from-emerald-400/15 to-teal-500/15 rounded-full filter blur-3xl animate-float opacity-60" style="animation-delay: 1.5s; animation-duration: 8s;"></div>
+    <div class="absolute bottom-20 right-1/3 w-88 h-88 bg-gradient-to-br from-orange-400/15 to-red-500/15 rounded-full filter blur-3xl animate-float opacity-50" style="animation-delay: 3.5s; animation-duration: 10s;"></div>
+    <div class="absolute top-1/2 right-1/4 w-56 h-56 bg-gradient-to-br from-indigo-400/15 to-purple-500/15 rounded-full filter blur-3xl animate-float opacity-55" style="animation-delay: 5.5s; animation-duration: 7s;"></div>
+    
+    <!-- Geometric Glass Shapes with Enhanced Movement -->
+    <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-br from-blue-300/30 to-purple-400/30 rounded-3xl rotate-45 filter blur-xl animate-float opacity-40" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-40 right-40 w-32 h-32 bg-gradient-to-br from-purple-300/30 to-pink-400/30 rounded-2xl rotate-12 filter blur-xl animate-float opacity-50" style="animation-delay: 3s;"></div>
+    <div class="absolute top-1/2 left-10 w-24 h-24 bg-gradient-to-br from-cyan-300/30 to-blue-400/30 rounded-xl rotate-45 filter blur-lg animate-float opacity-60" style="animation-delay: 5s;"></div>
+    
+    <!-- Enhanced Grid Pattern with Movement -->
+    <div class="absolute inset-0 opacity-[0.02] animate-pulse-slow" style="background-image: radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.5) 1px, transparent 0); background-size: 60px 60px;"></div>
+    
+    <!-- Floating Particles -->
+    <div class="absolute top-1/4 left-1/3 w-2 h-2 bg-blue-400/40 rounded-full animate-pulse-slow"></div>
+    <div class="absolute top-1/2 right-1/3 w-1 h-1 bg-purple-400/60 rounded-full animate-pulse-slow" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-1/3 left-1/2 w-3 h-3 bg-cyan-400/30 rounded-full animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/6 right-1/6 w-2 h-2 bg-emerald-400/50 rounded-full animate-pulse-slow" style="animation-delay: 3s;"></div>
+    <div class="absolute bottom-1/6 left-1/6 w-1 h-1 bg-orange-400/40 rounded-full animate-pulse-slow" style="animation-delay: 4s;"></div>
   </div>
 
-  <!-- Filters -->
-  <div class="card bg-white shadow-sm mb-8">
-    <div class="card-header">
-      <h3 class="card-title">Filters</h3>
-    </div>
-    <div class="card-body">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="relative page-header mb-8">
+      <div class="flex items-center justify-between">
         <div>
-          <label class="label">
-            <span class="label-text">Action</span>
-          </label>
-          <select class="select select-bordered w-full" [(ngModel)]="filters.action">
-            <option value="">All Actions</option>
-            <option value="login">Login</option>
-            <option value="logout">Logout</option>
-            <option value="policy purchase">Policy Purchase</option>
-            <option value="policy creation">Policy Creation</option>
-            <option value="policy update">Policy Update</option>
-            <option value="policy deletion">Policy Deletion</option>
-            <option value="claim submission">Claim Submission</option>
-            <option value="claim status update">Claim Status Update</option>
-            <option value="user registration">User Registration</option>
-            <option value="user update">User Update</option>
-            <option value="user deletion">User Deletion</option>
-            <option value="policy cancellation">Policy Cancellation</option>
-            <option value="payment">Payment</option>
-          </select>
+          <h1 class="text-4xl lg:text-5xl font-bold text-gradient-hero mb-2">Audit Logs</h1>
+          <p class="text-xl text-slate-600">Monitor system activity and user actions</p>
         </div>
-        <div>
-          <label class="label">
-            <span class="label-text">Actor ID</span>
-          </label>
-          <input 
-            type="text" 
-            class="input input-bordered w-full"
-            [(ngModel)]="filters.actorId"
-            placeholder="Enter actor ID">
-        </div>
-        <div>
-          <label class="label">
-            <span class="label-text">From Date</span>
-          </label>
-          <input 
-            type="date" 
-            class="input input-bordered w-full"
-            [(ngModel)]="filters.dateFrom">
-        </div>
-        <div>
-          <label class="label">
-            <span class="label-text">To Date</span>
-          </label>
-          <input 
-            type="date" 
-            class="input input-bordered w-full"
-            [(ngModel)]="filters.dateTo">
+        <div class="flex items-center space-x-4">
+          <button 
+            class="btn-glass group"
+            (click)="exportLogs()">
+            <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            Export Logs
+          </button>
         </div>
       </div>
-      <div class="flex space-x-4 mt-4">
-        <button class="btn btn-primary" (click)="applyFilters()">Apply Filters</button>
-        <button class="btn btn-ghost" (click)="clearFilters()">Clear Filters</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden mb-8">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="relative p-6">
+        <div class="flex items-center mb-4">
+          <svg class="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <h3 class="text-xl font-bold text-slate-900">Filters</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label class="label">
+              <span class="label-text font-medium text-slate-700">Action</span>
+            </label>
+            <select class="select select-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" [(ngModel)]="filters.action">
+              <option value="">All Actions</option>
+              <option value="login">Login</option>
+              <option value="logout">Logout</option>
+              <option value="policy purchase">Policy Purchase</option>
+              <option value="policy creation">Policy Creation</option>
+              <option value="policy update">Policy Update</option>
+              <option value="policy deletion">Policy Deletion</option>
+              <option value="claim submission">Claim Submission</option>
+              <option value="claim status update">Claim Status Update</option>
+              <option value="user registration">User Registration</option>
+              <option value="user update">User Update</option>
+              <option value="user deletion">User Deletion</option>
+              <option value="policy cancellation">Policy Cancellation</option>
+              <option value="payment">Payment</option>
+            </select>
+          </div>
+          <div>
+            <label class="label">
+              <span class="label-text font-medium text-slate-700">Actor ID</span>
+            </label>
+            <input 
+              type="text" 
+              class="input input-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+              [(ngModel)]="filters.actorId"
+              placeholder="Enter actor ID">
+          </div>
+          <div>
+            <label class="label">
+              <span class="label-text font-medium text-slate-700">From Date</span>
+            </label>
+            <input 
+              type="date" 
+              class="input input-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+              [(ngModel)]="filters.dateFrom">
+          </div>
+          <div>
+            <label class="label">
+              <span class="label-text font-medium text-slate-700">To Date</span>
+            </label>
+            <input 
+              type="date" 
+              class="input input-bordered w-full bg-glass-white border-white/20 backdrop-blur-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+              [(ngModel)]="filters.dateTo">
+          </div>
+        </div>
+        <div class="flex space-x-4 mt-6">
+          <button class="btn-primary group hover:scale-105 transition-all duration-300" (click)="applyFilters()">
+            <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            Apply Filters
+          </button>
+          <button class="btn-glass group hover:scale-105 transition-all duration-300" (click)="clearFilters()">
+            <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+            Clear Filters
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
   <!-- Loading State -->
   <div *ngIf="loading" class="flex items-center justify-center py-12">
@@ -94,113 +139,136 @@
     <span>{{ error }}</span>
   </div>
 
-  <!-- Audit Logs List -->
-  <div *ngIf="!loading && !error" class="card bg-white shadow-sm">
-    <div class="card-header">
-      <h3 class="card-title">System Activity Logs</h3>
-      <div class="text-sm text-gray-500">
-        Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ getMaxDisplayed() }} of {{ totalLogs }} logs
+    <!-- Audit Logs List -->
+    <div *ngIf="!loading && !error" class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="relative">
+        <div class="px-6 py-4 border-b border-white/20 bg-glass-white backdrop-blur-sm">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-bold text-slate-900 flex items-center">
+              <svg class="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              System Activity Logs
+            </h3>
+            <div class="text-sm text-slate-500">
+              Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ getMaxDisplayed() }} of {{ totalLogs }} logs
+            </div>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="table w-full">
+            <thead class="bg-glass-white backdrop-blur-sm">
+              <tr>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Action</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Actor</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Details</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">IP Address</th>
+                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Timestamp</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white/50 backdrop-blur-sm divide-y divide-white/20">
+              <tr *ngFor="let log of auditLogs" class="hover:bg-white/70 transition-all duration-300 group">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                      <span class="text-lg">{{ getActionIcon(log.action) }}</span>
+                    </div>
+                    <span class="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors duration-200" [ngClass]="getActionColor(log.action)">
+                      {{ log.action }}
+                    </span>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div>
+                    <div class="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors duration-200">{{ log.actor?.name || 'Unknown User' }}</div>
+                    <div class="text-sm text-slate-500">{{ log.actor?.email || log.actorId }}</div>
+                    <div class="text-xs text-slate-400">{{ log.actor?.role || 'Unknown Role' }}</div>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="max-w-xs">
+                    <div class="text-sm text-slate-900" *ngIf="log.details?.description">
+                      {{ log.details.description }}
+                    </div>
+                    <div class="text-sm text-slate-600" *ngIf="log.details?.amountClaimed">
+                      Amount: {{ log.details.amountClaimed | currency:'INR' }}
+                    </div>
+                    <div class="text-sm text-slate-600" *ngIf="log.details?.status">
+                      Status: {{ log.details.status }}
+                    </div>
+                    <div class="text-sm text-slate-600" *ngIf="log.details?.notes">
+                      Notes: {{ log.details.notes }}
+                    </div>
+                    <div class="text-sm text-slate-600" *ngIf="log.details?.policyId">
+                      Policy ID: {{ log.details.policyId }}
+                    </div>
+                    <div class="text-sm text-slate-600" *ngIf="log.details?.policyCode">
+                      Policy Code: {{ log.details.policyCode }}
+                    </div>
+                    <div class="text-sm text-slate-600" *ngIf="log.details?.policyTitle">
+                      Policy Title: {{ log.details.policyTitle }}
+                    </div>
+                    <div class="text-sm text-slate-600" *ngIf="log.details?.targetUserId">
+                      Target User ID: {{ log.details.targetUserId }}
+                    </div>
+                    <div class="text-sm text-slate-600" *ngIf="log.details?.changes">
+                      Changes: {{ formatChanges(log.details.changes) }}
+                    </div>
+                    <div class="text-xs text-slate-500" *ngIf="!hasDetails(log.details)">
+                      No additional details
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="font-mono text-sm text-slate-500">{{ log.ip }}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-slate-500">{{ formatDate(log.timestamp) }}</div>
+                </td>
+              </tr>
+              <tr *ngIf="auditLogs.length === 0">
+                <td colspan="5" class="text-center py-16">
+                  <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-slate-300 to-slate-400 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-glow">
+                      <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">No audit logs found</h3>
+                    <p class="text-slate-600">No system activity logs match your current filters.</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    <div class="card-body p-0">
-      <div class="overflow-x-auto">
-        <table class="table table-zebra">
-          <thead>
-            <tr>
-              <th>Action</th>
-              <th>Actor</th>
-              <th>Details</th>
-              <th>IP Address</th>
-              <th>Timestamp</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let log of auditLogs">
-              <td>
-                <div class="flex items-center space-x-2">
-                  <span class="text-2xl">{{ getActionIcon(log.action) }}</span>
-                  <span class="font-medium" [ngClass]="getActionColor(log.action)">
-                    {{ log.action }}
-                  </span>
-                </div>
-              </td>
-              <td>
-                <div>
-                  <div class="font-medium">{{ log.actor?.name || 'Unknown User' }}</div>
-                  <div class="text-sm text-gray-500">{{ log.actor?.email || log.actorId }}</div>
-                  <div class="text-xs text-gray-400">{{ log.actor?.role || 'Unknown Role' }}</div>
-                </div>
-              </td>
-              <td>
-                <div class="max-w-xs">
-                  <div class="text-sm" *ngIf="log.details?.description">
-                    {{ log.details.description }}
-                  </div>
-                  <div class="text-sm" *ngIf="log.details?.amountClaimed">
-                    Amount: {{ log.details.amountClaimed | currency:'INR' }}
-                  </div>
-                  <div class="text-sm" *ngIf="log.details?.status">
-                    Status: {{ log.details.status }}
-                  </div>
-                  <div class="text-sm" *ngIf="log.details?.notes">
-                    Notes: {{ log.details.notes }}
-                  </div>
-                  <div class="text-sm" *ngIf="log.details?.policyId">
-                    Policy ID: {{ log.details.policyId }}
-                  </div>
-                  <div class="text-sm" *ngIf="log.details?.policyCode">
-                    Policy Code: {{ log.details.policyCode }}
-                  </div>
-                  <div class="text-sm" *ngIf="log.details?.policyTitle">
-                    Policy Title: {{ log.details.policyTitle }}
-                  </div>
-                  <div class="text-sm" *ngIf="log.details?.targetUserId">
-                    Target User ID: {{ log.details.targetUserId }}
-                  </div>
-                  <div class="text-sm" *ngIf="log.details?.changes">
-                    Changes: {{ formatChanges(log.details.changes) }}
-                  </div>
-                  <div class="text-xs text-gray-500" *ngIf="!hasDetails(log.details)">
-                    No additional details
-                  </div>
-                </div>
-              </td>
-              <td class="font-mono text-sm">{{ log.ip }}</td>
-              <td class="text-sm">{{ formatDate(log.timestamp) }}</td>
-            </tr>
-            <tr *ngIf="auditLogs.length === 0">
-              <td colspan="5" class="text-center py-8 text-gray-500">
-                No audit logs found
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
 
-  <!-- Pagination -->
-  <div *ngIf="!loading && !error && getTotalPages() > 1" class="flex justify-center mt-8">
-    <div class="btn-group">
-      <button 
-        class="btn btn-sm"
-        [disabled]="currentPage === 1"
-        (click)="goToPage(currentPage - 1)">
-        Previous
-      </button>
-      <button 
-        *ngFor="let page of [].constructor(getTotalPages()); let i = index"
-        class="btn btn-sm"
-        [class.btn-active]="currentPage === i + 1"
-        (click)="goToPage(i + 1)">
-        {{ i + 1 }}
-      </button>
-      <button 
-        class="btn btn-sm"
-        [disabled]="currentPage === getTotalPages()"
-        (click)="goToPage(currentPage + 1)">
-        Next
-      </button>
+    <!-- Pagination -->
+    <div *ngIf="!loading && !error && getTotalPages() > 1" class="flex justify-center mt-8">
+      <div class="btn-group">
+        <button 
+          class="btn btn-sm btn-glass"
+          [disabled]="currentPage === 1"
+          (click)="goToPage(currentPage - 1)">
+          Previous
+        </button>
+        <button 
+          *ngFor="let page of [].constructor(getTotalPages()); let i = index"
+          class="btn btn-sm btn-glass"
+          [class.btn-active]="currentPage === i + 1"
+          (click)="goToPage(i + 1)">
+          {{ i + 1 }}
+        </button>
+        <button 
+          class="btn btn-sm btn-glass"
+          [disabled]="currentPage === getTotalPages()"
+          (click)="goToPage(currentPage + 1)">
+          Next
+        </button>
+      </div>
     </div>
   </div>
 </div>
