@@ -1,14 +1,14 @@
 /* Admin Dashboard Specific Styles */
 .stat-card {
-  @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-200;
+  @apply bg-glass-white rounded-2xl shadow-glass p-6 border border-white/20 backdrop-blur-sm hover:shadow-glow transition-all duration-300;
 }
 
 .stat-value {
-  @apply text-3xl font-bold text-gray-900;
+  @apply text-3xl font-bold text-gradient-hero;
 }
 
 .stat-label {
-  @apply text-sm font-medium text-gray-600 mt-1;
+  @apply text-sm font-medium text-slate-600 mt-1;
 }
 
 .stat-change {
@@ -16,7 +16,7 @@
 }
 
 .stat-change-positive {
-  @apply text-green-600;
+  @apply text-emerald-600;
 }
 
 .stat-change-negative {
@@ -24,15 +24,15 @@
 }
 
 .card {
-  @apply bg-white rounded-xl shadow-sm border border-gray-100;
+  @apply bg-glass-white rounded-2xl shadow-glass border border-white/20 backdrop-blur-sm;
 }
 
 .card-header {
-  @apply px-6 py-4 border-b border-gray-100 flex items-center justify-between;
+  @apply px-6 py-4 border-b border-white/20 bg-glass-white backdrop-blur-sm flex items-center justify-between;
 }
 
 .card-title {
-  @apply text-lg font-semibold text-gray-900;
+  @apply text-xl font-bold text-slate-900;
 }
 
 .card-body {
@@ -64,23 +64,23 @@
 }
 
 .btn {
-  @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 backdrop-blur-sm;
 }
 
 .btn-primary {
-  @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+  @apply bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white focus:ring-primary-500 shadow-glow;
 }
 
 .btn-secondary {
-  @apply bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500;
+  @apply bg-glass-white hover:bg-glass-primary text-slate-700 hover:text-primary-700 focus:ring-primary-500 border border-white/20;
 }
 
 .btn-outline {
-  @apply border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-blue-500;
+  @apply border-white/30 text-slate-700 bg-glass-white hover:bg-white/30 focus:ring-primary-500 backdrop-blur-sm;
 }
 
 .btn-ghost {
-  @apply text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:ring-gray-500;
+  @apply text-slate-600 hover:text-slate-900 hover:bg-glass-white focus:ring-primary-500 backdrop-blur-sm;
 }
 
 .btn-sm {
@@ -96,11 +96,11 @@
 }
 
 .alert {
-  @apply flex items-center p-4 rounded-lg;
+  @apply flex items-center p-4 rounded-xl backdrop-blur-sm;
 }
 
 .alert-error {
-  @apply bg-red-50 text-red-800 border border-red-200;
+  @apply bg-red-500/10 text-red-800 border border-red-500/20 backdrop-blur-sm;
 }
 
 .loading {
@@ -177,8 +177,34 @@
   }
 }
 
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.6);
+  }
+}
+
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite alternate;
 }
 
 /* Hover effects */
@@ -197,4 +223,58 @@
 
 .focus\\:ring-gray-500:focus {
   box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.5);
+}
+
+/* Glassmorphism specific animations */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}
+
+/* Enhanced glassmorphism effects */
+.glass-glow {
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.glass-glow-hover:hover {
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.5);
+}
+
+/* Floating elements */
+.floating-element {
+  animation: float 6s ease-in-out infinite;
+}
+
+.floating-element:nth-child(2) {
+  animation-delay: 2s;
+}
+
+.floating-element:nth-child(3) {
+  animation-delay: 4s;
+}
+
+/* Gradient text effects */
+.text-gradient-admin {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Enhanced card hover effects */
+.card-hover-effect {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
 }

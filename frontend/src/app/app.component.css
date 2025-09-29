@@ -1,0 +1,71 @@
+/* App Component Styles */
+
+/* Dropdown animations */
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.2s ease-out;
+}
+
+/* Glassmorphism dropdown styling */
+.dropdown-menu {
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Enhanced hover effects for dropdown items */
+.dropdown-item {
+  transition: all 0.2s ease-in-out;
+}
+
+.dropdown-item:hover {
+  transform: translateX(4px);
+}
+
+/* Mobile menu enhancements */
+.mobile-menu-item {
+  transition: all 0.2s ease-in-out;
+}
+
+.mobile-menu-item:hover {
+  transform: translateX(8px);
+}
+
+/* Admin section styling */
+.admin-section {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(239, 68, 68, 0.05) 100%);
+  border-radius: 12px;
+  padding: 12px;
+  margin: 8px 0;
+}
+
+/* Icon animations */
+.icon-hover {
+  transition: transform 0.2s ease-in-out;
+}
+
+.icon-hover:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    backdrop-filter: none;
+  }
+}

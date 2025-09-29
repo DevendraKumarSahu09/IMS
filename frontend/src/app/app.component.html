@@ -50,21 +50,51 @@
                class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
               Policies
             </a>
-            <a routerLink="/policies/my-policies" 
-               routerLinkActive="bg-primary-50 text-primary-700" 
-               class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-              My Policies
-            </a>
-            <a routerLink="/claims" 
-               routerLinkActive="bg-primary-50 text-primary-700" 
-               class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-              Claims
-            </a>
-            <a routerLink="/payments" 
-               routerLinkActive="bg-primary-50 text-primary-700" 
-               class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-              Payments
-            </a>
+            
+            <!-- Customer Dropdown -->
+            <div class="relative" (click)="$event.stopPropagation()">
+              <button (click)="toggleCustomerDropdown()" 
+                      class="flex items-center space-x-1 text-neutral-700 hover:text-primary-600 hover:bg-primary-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                <span>More</span>
+                <svg class="w-4 h-4 transition-transform duration-200" 
+                     [class.rotate-180]="isCustomerDropdownOpen" 
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              <!-- Dropdown Menu -->
+              <div *ngIf="isCustomerDropdownOpen" 
+                   class="absolute right-0 mt-2 w-48 bg-glass-white backdrop-blur-sm rounded-2xl shadow-glass border border-white/20 py-2 z-50 animate-slide-down dropdown-menu">
+                <a routerLink="/policies/my-policies" 
+                   (click)="closeCustomerDropdown()"
+                   routerLinkActive="bg-primary-50 text-primary-700" 
+                   class="flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 hover:bg-primary-50 hover:text-primary-700 transition-colors duration-200 group dropdown-item">
+                  <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span>My Policies</span>
+                </a>
+                <a routerLink="/claims" 
+                   (click)="closeCustomerDropdown()"
+                   routerLinkActive="bg-primary-50 text-primary-700" 
+                   class="flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 hover:bg-primary-50 hover:text-primary-700 transition-colors duration-200 group dropdown-item">
+                  <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                  <span>Claims</span>
+                </a>
+                <a routerLink="/payments" 
+                   (click)="closeCustomerDropdown()"
+                   routerLinkActive="bg-primary-50 text-primary-700" 
+                   class="flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 hover:bg-primary-50 hover:text-primary-700 transition-colors duration-200 group dropdown-item">
+                  <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                  </svg>
+                  <span>Payments</span>
+                </a>
+              </div>
+            </div>
           </ng-container>
           
           <!-- Agent Navigation -->
@@ -83,31 +113,75 @@
             Dashboard
           </a>
           
-          <!-- Admin specific navigation -->
+          <!-- Admin Dropdown -->
           <ng-container *ngIf="currentUser?.role === 'admin'">
-            <a routerLink="/admin/agents" 
-               routerLinkActive="bg-primary-50 text-primary-700" 
-               class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-              Manage Agents
-            </a>
-            <a routerLink="/admin/policies" 
-               routerLinkActive="bg-primary-50 text-primary-700" 
-               class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-              Manage Policies
-            </a>
-            <a routerLink="/admin/audit-logs" 
-               routerLinkActive="bg-primary-50 text-primary-700" 
-               class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-              Audit Logs
-            </a>
+            <div class="relative" (click)="$event.stopPropagation()">
+              <button (click)="toggleAdminDropdown()" 
+                      class="flex items-center space-x-1 text-neutral-700 hover:text-primary-600 hover:bg-primary-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                <span>More</span>
+                <svg class="w-4 h-4 transition-transform duration-200" 
+                     [class.rotate-180]="isAdminDropdownOpen" 
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              <!-- Dropdown Menu -->
+              <div *ngIf="isAdminDropdownOpen" 
+                   class="absolute right-0 mt-2 w-56 bg-glass-white backdrop-blur-sm rounded-2xl shadow-glass border border-white/20 py-2 z-50 animate-slide-down dropdown-menu">
+                <a routerLink="/admin/users" 
+                   (click)="closeAdminDropdown()"
+                   routerLinkActive="bg-primary-50 text-primary-700" 
+                   class="flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 hover:bg-primary-50 hover:text-primary-700 transition-colors duration-200 group dropdown-item">
+                  <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                  </svg>
+                  <span>Manage Users</span>
+                </a>
+                <a routerLink="/admin/claims" 
+                   (click)="closeAdminDropdown()"
+                   routerLinkActive="bg-primary-50 text-primary-700" 
+                   class="flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 hover:bg-primary-50 hover:text-primary-700 transition-colors duration-200 group dropdown-item">
+                  <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span>Manage Claims</span>
+                </a>
+                <a routerLink="/admin/agents" 
+                   (click)="closeAdminDropdown()"
+                   routerLinkActive="bg-primary-50 text-primary-700" 
+                   class="flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 hover:bg-primary-50 hover:text-primary-700 transition-colors duration-200 group dropdown-item">
+                  <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                  <span>Manage Agents</span>
+                </a>
+                <a routerLink="/admin/policies" 
+                   (click)="closeAdminDropdown()"
+                   routerLinkActive="bg-primary-50 text-primary-700" 
+                   class="flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 hover:bg-primary-50 hover:text-primary-700 transition-colors duration-200 group dropdown-item">
+                  <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span>Manage Policies</span>
+                </a>
+                <div class="border-t border-white/20 my-2"></div>
+                <a routerLink="/admin/audit-logs" 
+                   (click)="closeAdminDropdown()"
+                   routerLinkActive="bg-primary-50 text-primary-700" 
+                   class="flex items-center space-x-3 px-4 py-3 text-sm text-slate-700 hover:bg-primary-50 hover:text-primary-700 transition-colors duration-200 group dropdown-item">
+                  <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                  <span>View Audit Logs</span>
+                </a>
+              </div>
+            </div>
           </ng-container>
         </div>
         
         <!-- Auth Buttons / User Menu -->
         <div class="hidden md:flex items-center space-x-3">
-          <!-- Theme Toggle -->
-          <app-theme-toggle></app-theme-toggle>
-          
           <ng-container *ngIf="!shouldShowNavigation(); else userMenu">
             <a routerLink="/login" 
                class="text-neutral-700 hover:text-primary-600 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
@@ -187,21 +261,37 @@
            class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200">
           Policies
         </a>
-        <a routerLink="/policies/my-policies" 
-           routerLinkActive="bg-primary-50 text-primary-700" 
-           class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200">
-          My Policies
-        </a>
-        <a routerLink="/claims" 
-           routerLinkActive="bg-primary-50 text-primary-700" 
-           class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200">
-          Claims
-        </a>
-        <a routerLink="/payments" 
-           routerLinkActive="bg-primary-50 text-primary-700" 
-           class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200">
-          Payments
-        </a>
+        
+        <!-- Customer Account Section -->
+        <div class="px-3 py-2">
+          <div class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-2">My Account</div>
+          <div class="space-y-1">
+            <a routerLink="/policies/my-policies" 
+               routerLinkActive="bg-primary-50 text-primary-700" 
+               class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 mobile-menu-item">
+              <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              My Policies
+            </a>
+            <a routerLink="/claims" 
+               routerLinkActive="bg-primary-50 text-primary-700" 
+               class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 mobile-menu-item">
+              <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              Claims
+            </a>
+            <a routerLink="/payments" 
+               routerLinkActive="bg-primary-50 text-primary-700" 
+               class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 mobile-menu-item">
+              <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+              </svg>
+              Payments
+            </a>
+          </div>
+        </div>
       </ng-container>
       
       <!-- Agent Navigation -->
@@ -222,28 +312,53 @@
       
       <!-- Admin specific navigation -->
       <ng-container *ngIf="currentUser?.role === 'admin'">
-        <a routerLink="/admin/agents" 
-           routerLinkActive="bg-primary-50 text-primary-700" 
-           class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200">
-          Manage Agents
-        </a>
-        <a routerLink="/admin/policies" 
-           routerLinkActive="bg-primary-50 text-primary-700" 
-           class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200">
-          Manage Policies
-        </a>
-        <a routerLink="/admin/audit-logs" 
-           routerLinkActive="bg-primary-50 text-primary-700" 
-           class="text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200">
-          Audit Logs
-        </a>
+        <div class="px-3 py-2 admin-section">
+          <div class="text-sm font-semibold text-slate-600 mb-2">Admin Management</div>
+          <div class="space-y-1">
+            <a routerLink="/admin/users" 
+               routerLinkActive="bg-primary-50 text-primary-700" 
+               class="flex items-center space-x-3 text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 mobile-menu-item">
+              <svg class="w-4 h-4 icon-hover" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+              </svg>
+              <span>Manage Users</span>
+            </a>
+            <a routerLink="/admin/claims" 
+               routerLinkActive="bg-primary-50 text-primary-700" 
+               class="flex items-center space-x-3 text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 mobile-menu-item">
+              <svg class="w-4 h-4 icon-hover" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>Manage Claims</span>
+            </a>
+            <a routerLink="/admin/agents" 
+               routerLinkActive="bg-primary-50 text-primary-700" 
+               class="flex items-center space-x-3 text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 mobile-menu-item">
+              <svg class="w-4 h-4 icon-hover" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span>Manage Agents</span>
+            </a>
+            <a routerLink="/admin/policies" 
+               routerLinkActive="bg-primary-50 text-primary-700" 
+               class="flex items-center space-x-3 text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 mobile-menu-item">
+              <svg class="w-4 h-4 icon-hover" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>Manage Policies</span>
+            </a>
+            <a routerLink="/admin/audit-logs" 
+               routerLinkActive="bg-primary-50 text-primary-700" 
+               class="flex items-center space-x-3 text-neutral-700 hover:text-primary-600 hover:bg-primary-50 block px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 mobile-menu-item">
+              <svg class="w-4 h-4 icon-hover" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              <span>View Audit Logs</span>
+            </a>
+          </div>
+        </div>
       </ng-container>
       <div class="border-t border-neutral-200 pt-4">
-        <!-- Mobile Theme Toggle -->
-        <div class="px-3 py-2 mb-4">
-          <app-theme-toggle></app-theme-toggle>
-        </div>
-        
         <ng-container *ngIf="!isAuthenticated; else mobileUserMenu">
           <a routerLink="/login" 
              class="text-neutral-700 hover:text-primary-600 block px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200">
@@ -345,7 +460,8 @@
       </div>
       
       <div class="border-t border-neutral-800 mt-8 pt-8 text-center text-neutral-400">
-                <p>&copy; 2024 IMS. All rights reserved.</p>
+        <p>&copy; 2025 IMS. All rights reserved.</p>
+        <p class="mt-2 text-sm">Created by Devendra</p>
       </div>
     </div>
   </footer>

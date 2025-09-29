@@ -1,21 +1,50 @@
-<div class="min-h-screen bg-gray-50 p-6">
-  <!-- Header -->
-  <div class="mb-8">
-    <div class="flex items-center justify-between">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-900">Agent Dashboard</h1>
-        <p class="text-gray-600 mt-2">Manage your assigned policies and claims</p>
-      </div>
-      <div class="flex space-x-4">
-        <button routerLink="/agent/claims" class="btn btn-primary">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-          </svg>
-          Process Claims
-        </button>
+<div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50">
+  <!-- Advanced Abstract Background Elements -->
+  <div class="absolute inset-0 overflow-hidden">
+    <!-- Floating Glass Orbs with Enhanced Movement -->
+    <div class="absolute -top-32 -right-32 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full filter blur-3xl animate-float opacity-70"></div>
+    <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-pink-500/20 rounded-full filter blur-3xl animate-float opacity-60" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full filter blur-3xl animate-float opacity-50" style="animation-delay: 4s;"></div>
+    
+    <!-- Dynamic Moving Blur Effects -->
+    <div class="absolute top-10 left-1/4 w-72 h-72 bg-gradient-to-br from-emerald-400/15 to-teal-500/15 rounded-full filter blur-3xl animate-float opacity-60" style="animation-delay: 1.5s; animation-duration: 8s;"></div>
+    <div class="absolute bottom-20 right-1/3 w-88 h-88 bg-gradient-to-br from-orange-400/15 to-red-500/15 rounded-full filter blur-3xl animate-float opacity-50" style="animation-delay: 3.5s; animation-duration: 10s;"></div>
+    <div class="absolute top-1/2 right-1/4 w-56 h-56 bg-gradient-to-br from-indigo-400/15 to-purple-500/15 rounded-full filter blur-3xl animate-float opacity-55" style="animation-delay: 5.5s; animation-duration: 7s;"></div>
+    
+    <!-- Geometric Glass Shapes with Enhanced Movement -->
+    <div class="absolute top-20 right-20 w-40 h-40 bg-gradient-to-br from-blue-300/30 to-purple-400/30 rounded-3xl rotate-45 filter blur-xl animate-float opacity-40" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-40 right-40 w-32 h-32 bg-gradient-to-br from-purple-300/30 to-pink-400/30 rounded-2xl rotate-12 filter blur-xl animate-float opacity-50" style="animation-delay: 3s;"></div>
+    <div class="absolute top-1/2 left-10 w-24 h-24 bg-gradient-to-br from-cyan-300/30 to-blue-400/30 rounded-xl rotate-45 filter blur-lg animate-float opacity-60" style="animation-delay: 5s;"></div>
+    
+    <!-- Enhanced Grid Pattern with Movement -->
+    <div class="absolute inset-0 opacity-[0.02] animate-pulse-slow" style="background-image: radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.5) 1px, transparent 0); background-size: 60px 60px;"></div>
+    
+    <!-- Floating Particles -->
+    <div class="absolute top-1/4 left-1/3 w-2 h-2 bg-blue-400/40 rounded-full animate-pulse-slow"></div>
+    <div class="absolute top-1/2 right-1/3 w-1 h-1 bg-purple-400/60 rounded-full animate-pulse-slow" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-1/3 left-1/2 w-3 h-3 bg-cyan-400/30 rounded-full animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/6 right-1/6 w-2 h-2 bg-emerald-400/50 rounded-full animate-pulse-slow" style="animation-delay: 3s;"></div>
+    <div class="absolute bottom-1/6 left-1/6 w-1 h-1 bg-orange-400/40 rounded-full animate-pulse-slow" style="animation-delay: 4s;"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="relative page-header mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-4xl lg:text-5xl font-bold text-gradient-hero mb-2">Agent Dashboard</h1>
+          <p class="text-xl text-slate-600">Manage your assigned policies and claims</p>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button routerLink="/agent/claims" class="btn-glass group">
+            <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+            Process Claims
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
   <!-- Loading State -->
   <div *ngIf="loading" class="flex items-center justify-center py-12">
@@ -34,65 +63,93 @@
   <div *ngIf="!loading && !error" class="space-y-8">
     <!-- KPI Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="card bg-white shadow-sm">
-        <div class="card-body p-6">
+      <!-- Assigned Policies -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
           <div class="flex items-center">
-            <div class="p-3 bg-blue-100 rounded-lg">
-              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-              </svg>
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
             </div>
-            <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600">Assigned Policies</p>
-              <p class="text-2xl font-bold text-gray-900">{{ stats.assignedPolicies }}</p>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ stats.assignedPolicies }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Assigned Policies</div>
+              <div class="text-sm text-slate-500 mt-2">
+                Policies under management
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="card bg-white shadow-sm">
-        <div class="card-body p-6">
+      <!-- Pending Claims -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
           <div class="flex items-center">
-            <div class="p-3 bg-yellow-100 rounded-lg">
-              <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-              </svg>
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
+              </div>
             </div>
-            <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600">Pending Claims</p>
-              <p class="text-2xl font-bold text-gray-900">{{ stats.pendingClaims }}</p>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ stats.pendingClaims }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Pending Claims</div>
+              <div class="text-sm text-slate-500 mt-2">
+                Awaiting review
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="card bg-white shadow-sm">
-        <div class="card-body p-6">
+      <!-- Approved Claims -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
           <div class="flex items-center">
-            <div class="p-3 bg-green-100 rounded-lg">
-              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
             </div>
-            <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600">Approved Claims</p>
-              <p class="text-2xl font-bold text-gray-900">{{ stats.approvedClaims }}</p>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ stats.approvedClaims }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Approved Claims</div>
+              <div class="text-sm text-slate-500 mt-2">
+                Successfully processed
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="card bg-white shadow-sm">
-        <div class="card-body p-6">
+      <!-- Total Commission -->
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative p-6">
           <div class="flex items-center">
-            <div class="p-3 bg-purple-100 rounded-lg">
-              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-              </svg>
+            <div class="flex-shrink-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                </svg>
+              </div>
             </div>
-            <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600">Total Commission</p>
-              <p class="text-2xl font-bold text-gray-900">{{ formatCurrency(stats.totalCommission) }}</p>
+            <div class="ml-4 flex-1">
+              <div class="text-3xl font-bold text-gradient-hero group-hover:scale-110 transition-transform duration-300">{{ formatCurrency(stats.totalCommission) }}</div>
+              <div class="text-sm font-medium text-slate-600 mt-1">Total Commission</div>
+              <div class="text-sm text-slate-500 mt-2">
+                Earnings from claims
+              </div>
             </div>
           </div>
         </div>
@@ -102,69 +159,98 @@
     <!-- Main Content Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <!-- Assigned Claims -->
-      <div class="card bg-white shadow-sm">
-        <div class="card-header">
-          <h3 class="card-title">Assigned Claims</h3>
-          <a routerLink="/claims" class="btn btn-sm btn-ghost">View All</a>
-        </div>
-        <div class="card-body p-0">
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative">
+          <div class="px-6 py-4 border-b border-white/20 bg-glass-white backdrop-blur-sm">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-bold text-slate-900 flex items-center">
+                <svg class="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                </svg>
+                Assigned Claims
+              </h3>
+              <a routerLink="/claims" class="btn btn-sm btn-glass group hover:scale-105 transition-all duration-300">
+                <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                View All
+              </a>
+            </div>
+          </div>
           <div class="overflow-x-auto">
-            <table class="table table-zebra">
-              <thead>
+            <table class="table w-full">
+              <thead class="bg-glass-white backdrop-blur-sm">
                 <tr>
-                  <th>Customer</th>
-                  <th>Policy</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Customer</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Policy</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Amount</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let claim of assignedClaims.slice(0, 5)">
-                  <td>
+              <tbody class="bg-white/50 backdrop-blur-sm divide-y divide-white/20">
+                <tr *ngFor="let claim of assignedClaims.slice(0, 5)" class="hover:bg-white/70 transition-all duration-300 group">
+                  <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center space-x-3">
-                      <div class="avatar placeholder">
-                        <div class="bg-neutral text-neutral-content rounded-full w-8">
-                          <span class="text-xs">{{ claim.user?.name?.charAt(0) || 'U' }}</span>
+                      <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                          <span class="text-sm font-bold text-white">{{ claim.user?.name?.charAt(0) || 'U' }}</span>
                         </div>
                       </div>
                       <div>
-                        <div class="font-bold">{{ getClaimUserName(claim) }}</div>
-                        <div class="text-sm opacity-50">{{ getClaimUserEmail(claim) }}</div>
+                        <div class="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors duration-200">{{ getClaimUserName(claim) }}</div>
+                        <div class="text-sm text-slate-500">{{ getClaimUserEmail(claim) }}</div>
                       </div>
                     </div>
                   </td>
-                  <td>
-                    <div class="text-sm font-medium">{{ getClaimPolicyTitle(claim) }}</div>
-                    <div class="text-sm opacity-50">{{ getClaimPolicyCode(claim) }}</div>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-slate-900">{{ getClaimPolicyTitle(claim) }}</div>
+                    <div class="text-sm text-slate-500">{{ getClaimPolicyCode(claim) }}</div>
                   </td>
-                  <td class="font-medium">{{ formatCurrency(claim.amountClaimed) }}</td>
-                  <td>
-                    <span class="badge" [ngClass]="getStatusColor(claim.status)">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-bold text-slate-900 group-hover:text-green-600 transition-colors duration-200">{{ formatCurrency(claim.amountClaimed) }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium" [ngClass]="getStatusColor(claim.status)">
                       {{ claim.status }}
                     </span>
                   </td>
-                  <td>
+                  <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex space-x-2" *ngIf="claim.status === 'PENDING' || claim.status === 'pending'">
                       <button 
-                        class="btn btn-success btn-xs"
+                        class="btn btn-success btn-sm hover:scale-110 transition-transform duration-200 group"
                         (click)="updateClaimStatus(claim._id, 'APPROVED', 'Claim approved by agent')">
+                        <svg class="w-4 h-4 mr-1 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
                         Approve
                       </button>
                       <button 
-                        class="btn btn-error btn-xs"
+                        class="btn btn-error btn-sm hover:scale-110 transition-transform duration-200 group"
                         (click)="updateClaimStatus(claim._id, 'REJECTED', 'Claim rejected by agent')">
+                        <svg class="w-4 h-4 mr-1 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
                         Reject
                       </button>
                     </div>
-                    <span *ngIf="claim.status !== 'PENDING' && claim.status !== 'pending'" class="text-sm text-gray-500">
+                    <span *ngIf="claim.status !== 'PENDING' && claim.status !== 'pending'" class="text-sm text-slate-500">
                       Processed
                     </span>
                   </td>
                 </tr>
                 <tr *ngIf="assignedClaims.length === 0">
-                  <td colspan="5" class="text-center py-8 text-gray-500">
-                    No assigned claims found
+                  <td colspan="5" class="text-center py-16">
+                    <div class="flex flex-col items-center">
+                      <div class="w-16 h-16 bg-gradient-to-br from-slate-300 to-slate-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                      </div>
+                      <h4 class="text-lg font-semibold text-slate-900 mb-2">No Assigned Claims</h4>
+                      <p class="text-slate-600">No claims have been assigned to you yet.</p>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -174,53 +260,78 @@
       </div>
 
       <!-- Assigned Policies -->
-      <div class="card bg-white shadow-sm">
-        <div class="card-header">
-          <h3 class="card-title">Assigned Policies</h3>
-          <a routerLink="/policies" class="btn btn-sm btn-ghost">View All</a>
-        </div>
-        <div class="card-body p-0">
+      <div class="card-glass group hover:shadow-glow transition-all duration-500 transform hover:-translate-y-1 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="relative">
+          <div class="px-6 py-4 border-b border-white/20 bg-glass-white backdrop-blur-sm">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-bold text-slate-900 flex items-center">
+                <svg class="w-6 h-6 text-emerald-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Assigned Policies
+              </h3>
+              <a routerLink="/policies" class="btn btn-sm btn-glass group hover:scale-105 transition-all duration-300">
+                <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                View All
+              </a>
+            </div>
+          </div>
           <div class="overflow-x-auto">
-            <table class="table table-zebra">
-              <thead>
+            <table class="table w-full">
+              <thead class="bg-glass-white backdrop-blur-sm">
                 <tr>
-                  <th>Customer</th>
-                  <th>Policy</th>
-                  <th>Premium</th>
-                  <th>Status</th>
-                  <th>End Date</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Customer</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Policy</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Premium</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">End Date</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let policy of assignedPolicies.slice(0, 5)">
-                  <td>
+              <tbody class="bg-white/50 backdrop-blur-sm divide-y divide-white/20">
+                <tr *ngFor="let policy of assignedPolicies.slice(0, 5)" class="hover:bg-white/70 transition-all duration-300 group">
+                  <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center space-x-3">
-                      <div class="avatar placeholder">
-                        <div class="bg-neutral text-neutral-content rounded-full w-8">
-                          <span class="text-xs">{{ policy.user?.name?.charAt(0) || 'U' }}</span>
+                      <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                          <span class="text-sm font-bold text-white">{{ policy.user?.name?.charAt(0) || 'U' }}</span>
                         </div>
                       </div>
                       <div>
-                        <div class="font-bold">{{ getPolicyUserName(policy) }}</div>
-                        <div class="text-sm opacity-50">{{ getPolicyUserEmail(policy) }}</div>
+                        <div class="text-sm font-semibold text-slate-900 group-hover:text-emerald-600 transition-colors duration-200">{{ getPolicyUserName(policy) }}</div>
+                        <div class="text-sm text-slate-500">{{ getPolicyUserEmail(policy) }}</div>
                       </div>
                     </div>
                   </td>
-                  <td>
-                    <div class="text-sm font-medium">{{ getPolicyTitle(policy) }}</div>
-                    <div class="text-sm opacity-50">{{ getPolicyCode(policy) }}</div>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-slate-900">{{ getPolicyTitle(policy) }}</div>
+                    <div class="text-sm text-slate-500">{{ getPolicyCode(policy) }}</div>
                   </td>
-                  <td class="font-medium">{{ formatCurrency(policy.premiumPaid) }}</td>
-                  <td>
-                    <span class="badge" [ngClass]="getPolicyStatusColor(policy.status)">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-bold text-slate-900 group-hover:text-green-600 transition-colors duration-200">{{ formatCurrency(policy.premiumPaid) }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium" [ngClass]="getPolicyStatusColor(policy.status)">
                       {{ policy.status }}
                     </span>
                   </td>
-                  <td class="text-sm">{{ formatDate(policy.endDate) }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-slate-500">{{ formatDate(policy.endDate) }}</div>
+                  </td>
                 </tr>
                 <tr *ngIf="assignedPolicies.length === 0">
-                  <td colspan="5" class="text-center py-8 text-gray-500">
-                    No assigned policies found
+                  <td colspan="5" class="text-center py-16">
+                    <div class="flex flex-col items-center">
+                      <div class="w-16 h-16 bg-gradient-to-br from-slate-300 to-slate-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                      </div>
+                      <h4 class="text-lg font-semibold text-slate-900 mb-2">No Assigned Policies</h4>
+                      <p class="text-slate-600">No policies have been assigned to you yet.</p>
+                    </div>
                   </td>
                 </tr>
               </tbody>
