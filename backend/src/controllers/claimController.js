@@ -3,17 +3,52 @@ const { logAction } = require('../utils/auditLogger');
 
 exports.getClaims = async (req, res) => {
   try {
-    const claims = await claimService.getClaims(req.user);
-    res.json(claims);
+    const {
+      page = 1,
+      limit = 10,
+      status,
+      dateFrom,
+      dateTo,
+      amountMin,
+      amountMax,
+      search
+    } = req.query;
+
+    const claims = await claimService.getClaimsWithFilters(
+      req.user.id, 
+      req.user.role,
+      {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        status,
+        dateFrom,
+        dateTo,
+        amountMin: amountMin ? parseFloat(amountMin) : null,
+        amountMax: amountMax ? parseFloat(amountMax) : null,
+        search
+      }
+    );
+    
+    res.json({
+      success: true,
+      data: claims.claims,
+      pagination: claims.pagination
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message || 'Failed to fetch claims' });
+    res.status(500).json({ 
+      success: false,
+      error: error.message || 'Failed to fetch claims' 
+    });
   }
 };
 
 exports.getClaimById = async (req, res) => {
   try {
-    const claim = await claimService.getClaimById(req.params.id, req.user);
-    res.json(claim);
+    const claim = await claimService.getClaimById(req.params.id, req.user.id, req.user.role);
+    res.json({
+      success: true,
+      data: claim
+    });
   } catch (error) {
     if (error.message === 'Claim not found') {
       return res.status(404).json({ error: error.message });
@@ -27,13 +62,23 @@ exports.getClaimById = async (req, res) => {
 
 exports.createClaim = async (req, res) => {
   try {
-    const { policyId, incidentDate, description, amount } = req.body;
+    const { userPolicyId, incidentDate, description, amountClaimed } = req.body;
     
-    const saved = await claimService.createClaim(req.user.id, {
-      userPolicyId: policyId,
+    console.log('Create claim request:', {
+      userId: req.user.id,
+      userPolicyId,
       incidentDate,
       description,
-      amountClaimed: amount
+      amountClaimed
+    });
+    
+    console.log('User from token:', req.user);
+    
+    const saved = await claimService.createClaim(req.user.id, {
+      userPolicyId,
+      incidentDate,
+      description,
+      amountClaimed
     });
     
     // Log the action
@@ -42,16 +87,18 @@ exports.createClaim = async (req, res) => {
       req.user.id,
       {
         claimId: saved._id,
-        userPolicyId: policyId,
+        userPolicyId: userPolicyId,
         incidentDate: incidentDate,
         description: description,
-        amountClaimed: amount
+        amountClaimed: amountClaimed
       },
       req.ip
     );
     
+    console.log('Claim created successfully:', saved);
     res.status(201).json(saved);
   } catch (error) {
+    console.error('Error creating claim:', error);
     res.status(400).json({ error: error.message });
   }
 };

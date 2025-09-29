@@ -1,13 +1,13 @@
-const Agent = require('../models/Agent');
+const User = require('../models/User');
 const UserPolicy = require('../models/UserPolicy');
 const Claim = require('../models/Claim');
 
 const getAllAgents = async () => {
-  return await Agent.find().populate('assignedPolicies');
+  return await User.find({ role: { $in: ['agent', 'admin'] } }).select('-passwordHash');
 };
 
 const getAgentById = async (agentId) => {
-  const agent = await Agent.findById(agentId).populate('assignedPolicies');
+  const agent = await User.findOne({ _id: agentId, role: { $in: ['agent', 'admin'] } }).select('-passwordHash');
   if (!agent) {
     throw new Error('Agent not found');
   }
@@ -15,12 +15,12 @@ const getAgentById = async (agentId) => {
 };
 
 const createAgent = async (agentData) => {
-  const agent = new Agent(agentData);
-  return await agent.save();
+  // This function is now handled in the controller
+  throw new Error('Use controller createAgent method instead');
 };
 
 const assignAgent = async (agentId, policyId, claimId) => {
-  const agent = await Agent.findById(agentId);
+  const agent = await User.findOne({ _id: agentId, role: { $in: ['agent', 'admin'] } });
   if (!agent) {
     throw new Error('Agent not found');
   }

@@ -4,18 +4,30 @@ const { logAction } = require('../utils/auditLogger');
 exports.getPolicies = async (req, res) => {
   try {
     const policies = await policyService.getAllPolicies();
-    res.json(policies);
+    res.json({
+      success: true,
+      data: policies
+    });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ 
+      success: false,
+      error: err.message 
+    });
   }
 };
 
 exports.getPolicyById = async (req, res) => {
   try {
     const policy = await policyService.getPolicyById(req.params.id);
-    res.json(policy);
+    res.json({
+      success: true,
+      data: policy
+    });
   } catch (err) {
-    res.status(404).json({ error: err.message });
+    res.status(404).json({ 
+      success: false,
+      error: err.message 
+    });
   }
 };
 
@@ -36,9 +48,72 @@ exports.createPolicy = async (req, res) => {
       req.ip
     );
     
-    res.status(201).json(saved);
+    res.status(201).json({
+      success: true,
+      data: saved
+    });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ 
+      success: false,
+      error: err.message 
+    });
+  }
+};
+
+exports.updatePolicy = async (req, res) => {
+  try {
+    const updated = await policyService.updatePolicy(req.params.id, req.body);
+    
+    // Log the action
+    await logAction(
+      'policy update',
+      req.user.id,
+      {
+        policyId: updated._id,
+        code: updated.code,
+        title: updated.title,
+        changes: req.body
+      },
+      req.ip
+    );
+    
+    res.json({
+      success: true,
+      data: updated
+    });
+  } catch (err) {
+    res.status(400).json({ 
+      success: false,
+      error: err.message 
+    });
+  }
+};
+
+exports.deletePolicy = async (req, res) => {
+  try {
+    const deleted = await policyService.deletePolicy(req.params.id);
+    
+    // Log the action
+    await logAction(
+      'policy deletion',
+      req.user.id,
+      {
+        policyId: req.params.id,
+        code: deleted.code,
+        title: deleted.title
+      },
+      req.ip
+    );
+    
+    res.json({ 
+      success: true,
+      message: 'Policy deleted successfully' 
+    });
+  } catch (err) {
+    res.status(400).json({ 
+      success: false,
+      error: err.message 
+    });
   }
 };
 
@@ -68,8 +143,14 @@ exports.purchasePolicy = async (req, res) => {
       req.ip
     );
     
-    res.status(201).json(savedUserPolicy);
+    res.status(201).json({
+      success: true,
+      data: savedUserPolicy
+    });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ 
+      success: false,
+      error: err.message 
+    });
   }
 };

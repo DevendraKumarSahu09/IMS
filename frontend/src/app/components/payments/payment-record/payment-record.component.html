@@ -1,0 +1,256 @@
+<div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50">
+  <!-- Advanced Abstract Background Elements -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-500/10 rounded-full filter blur-3xl animate-float"></div>
+    <div class="absolute -bottom-32 -left-32 w-80 h-80 bg-gradient-to-br from-purple-400/10 to-pink-500/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-gradient-to-br from-cyan-400/10 to-blue-500/10 rounded-full filter blur-3xl animate-float" style="animation-delay: 4s;"></div>
+    
+    <!-- Floating Geometric Shapes -->
+    <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-blue-300/20 to-purple-400/20 rounded-3xl rotate-45 filter blur-xl animate-float" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-40 right-40 w-24 h-24 bg-gradient-to-br from-purple-300/20 to-pink-400/20 rounded-2xl rotate-12 filter blur-xl animate-float" style="animation-delay: 3s;"></div>
+  </div>
+
+  <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500 to-blue-600 rounded-2xl shadow-glow mb-6">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+        </svg>
+      </div>
+      <h1 class="text-4xl font-bold text-gradient-hero mb-4">Record Payment</h1>
+      <p class="text-xl text-slate-600 max-w-2xl mx-auto">Record premium payments for your insurance policies. This includes policy renewals, additional premium payments, or any other payments related to your insurance coverage.</p>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="card-glass">
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="p-8">
+        <!-- Policy Selection -->
+        <div class="mb-8">
+          <label class="block text-sm font-semibold text-slate-700 mb-3">Select Policy</label>
+          <div *ngIf="loading" class="flex items-center justify-center py-8">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <span class="ml-3 text-slate-600">Loading your policies...</span>
+          </div>
+          
+          <div *ngIf="!loading && userPolicies.length === 0" class="text-center py-8">
+            <div class="text-slate-500">
+              <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <p class="text-lg font-medium mb-2">No Active Policies Found</p>
+              <p class="text-sm mb-6">You need to purchase an insurance policy before you can record payments for it.</p>
+              <button type="button" routerLink="/policies" class="btn-primary">
+                Browse Policies
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="!loading && userPolicies.length > 0" class="space-y-3">
+            <div *ngFor="let policy of userPolicies" class="relative">
+              <input 
+                type="radio" 
+                [id]="'policy-' + policy._id" 
+                [value]="policy._id" 
+                formControlName="userPolicyId"
+                class="sr-only peer">
+              <label 
+                [for]="'policy-' + policy._id" 
+                class="flex items-center p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-300 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all duration-200">
+                <div class="flex-1">
+                  <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-semibold text-slate-900">{{ getPolicyDisplayName(policy) }}</h3>
+                    <span class="badge bg-emerald-100 text-emerald-800">{{ policy.status }}</span>
+                  </div>
+                  <div class="text-sm text-slate-600 space-y-1">
+                    <p>Coverage: {{ formatCurrency(getPolicyCoverage(policy)) }}</p>
+                    <p>Premium: {{ formatCurrency(policy.premiumPaid) }}/month</p>
+                    <p>Valid until: {{ policy.endDate | date:'MMM dd, yyyy' }}</p>
+                  </div>
+                </div>
+                <div class="ml-4 w-5 h-5 border-2 border-slate-300 rounded-full peer-checked:border-blue-500 peer-checked:bg-blue-500 flex items-center justify-center">
+                  <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                </div>
+              </label>
+            </div>
+          </div>
+          
+          <div *ngIf="paymentForm.get('userPolicyId')?.invalid && paymentForm.get('userPolicyId')?.touched" class="text-red-600 text-sm mt-2">
+            Please select a policy
+          </div>
+        </div>
+
+        <!-- Payment Amount -->
+        <div class="mb-8">
+          <label class="block text-sm font-semibold text-slate-700 mb-3">Payment Amount</label>
+          <div class="flex gap-4">
+            <div class="flex-1 relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-slate-500 text-lg">₹</span>
+              </div>
+              <input 
+                type="number" 
+                formControlName="amount"
+                placeholder="Enter payment amount"
+                class="form-input pl-8">
+            </div>
+            <button 
+              type="button" 
+              (click)="usePremiumAmount()"
+              class="btn-secondary whitespace-nowrap">
+              Use Premium
+            </button>
+          </div>
+          <div class="flex items-center justify-between mt-2">
+            <div *ngIf="paymentForm.get('amount')?.invalid && paymentForm.get('amount')?.touched" class="text-red-600 text-sm">
+              <span *ngIf="paymentForm.get('amount')?.errors?.['required']">Payment amount is required</span>
+              <span *ngIf="paymentForm.get('amount')?.errors?.['min']">Amount must be greater than 0</span>
+            </div>
+            <div class="text-sm text-slate-500">
+              Suggested: {{ formatCurrency(getSuggestedAmount()) }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Method Selection -->
+        <div class="mb-8">
+          <label class="block text-sm font-semibold text-slate-700 mb-3">Payment Method</label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div *ngFor="let method of paymentMethods" class="relative">
+              <input 
+                type="radio" 
+                [id]="'method-' + method.id" 
+                [value]="method.id" 
+                formControlName="paymentMethod"
+                (change)="onPaymentMethodChange(method.id)"
+                class="sr-only peer">
+              <label 
+                [for]="'method-' + method.id" 
+                class="flex items-center p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-300 peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all duration-200">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-3 shadow-glow">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="method.icon" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-slate-900">{{ method.name }}</h4>
+                  <p class="text-sm text-slate-600">{{ method.description }}</p>
+                </div>
+              </label>
+            </div>
+          </div>
+          
+          <div *ngIf="paymentForm.get('paymentMethod')?.invalid && paymentForm.get('paymentMethod')?.touched" class="text-red-600 text-sm mt-2">
+            Please select a payment method
+          </div>
+        </div>
+
+        <!-- Payment Details -->
+        <div *ngIf="selectedPaymentMethod" class="mb-8">
+          <label class="block text-sm font-semibold text-slate-700 mb-3">Payment Details</label>
+          <div formGroupName="paymentDetails" class="space-y-4">
+            
+            <!-- Card Details -->
+            <div *ngIf="selectedPaymentMethod.id === 'card'" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-2">Card Number</label>
+                <input 
+                  type="text" 
+                  formControlName="cardNumber"
+                  placeholder="1234 5678 9012 3456"
+                  maxlength="16"
+                  class="form-input">
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-2">Expiry Date</label>
+                  <input 
+                    type="text" 
+                    formControlName="expiryDate"
+                    placeholder="MM/YY"
+                    maxlength="5"
+                    class="form-input">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-2">CVV</label>
+                  <input 
+                    type="text" 
+                    formControlName="cvv"
+                    placeholder="123"
+                    maxlength="4"
+                    class="form-input">
+                </div>
+              </div>
+            </div>
+
+            <!-- UPI Details -->
+            <div *ngIf="selectedPaymentMethod.id === 'upi'">
+              <label class="block text-sm font-medium text-slate-700 mb-2">UPI ID</label>
+              <input 
+                type="email" 
+                formControlName="upiId"
+                placeholder="yourname@paytm"
+                class="form-input">
+            </div>
+
+            <!-- Net Banking Details -->
+            <div *ngIf="selectedPaymentMethod.id === 'netbanking'">
+              <label class="block text-sm font-medium text-slate-700 mb-2">Bank Account</label>
+              <input 
+                type="text" 
+                formControlName="bankAccount"
+                placeholder="Enter your bank account number"
+                class="form-input">
+            </div>
+
+            <!-- Wallet Details -->
+            <div *ngIf="selectedPaymentMethod.id === 'wallet'" class="text-center py-8">
+              <div class="text-slate-500">
+                <svg class="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <p class="text-sm">Wallet payment details will be handled by the payment gateway</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex items-center justify-between pt-6 border-t border-slate-200">
+          <button 
+            type="button" 
+            routerLink="/payments"
+            class="btn-secondary">
+            Cancel
+          </button>
+          <button 
+            type="submit" 
+            [disabled]="paymentForm.invalid || submitting"
+            class="btn-primary relative">
+            <span *ngIf="submitting" class="absolute inset-0 flex items-center justify-center">
+              <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+            </span>
+            <span [class.opacity-0]="submitting">Record Payment</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Security Notice -->
+    <div class="mt-8 card-glass">
+      <div class="p-6">
+        <div class="flex items-start space-x-3">
+          <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-medium text-slate-900">Secure Payment</h4>
+            <p class="text-sm text-slate-600 mt-1">Your payment information is encrypted and processed securely. We never store your payment details on our servers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

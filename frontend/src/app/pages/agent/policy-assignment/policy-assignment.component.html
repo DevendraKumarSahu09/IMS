@@ -1,0 +1,372 @@
+<div class="min-h-screen bg-gray-50 p-6">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">Policy Assignments</h1>
+        <p class="text-gray-600 mt-2">Track and manage policy assignments</p>
+      </div>
+      <div class="flex space-x-4">
+        <button (click)="loadAssignments()" class="btn btn-outline">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex items-center justify-center py-12">
+    <div class="loading loading-spinner loading-lg"></div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-error mb-6">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <span>{{ error }}</span>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!loading && !error" class="space-y-6">
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-blue-100 rounded-lg">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Total Assignments</p>
+              <p class="text-2xl font-bold text-gray-900">{{ stats.totalAssignments }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-green-100 rounded-lg">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Active Assignments</p>
+              <p class="text-2xl font-bold text-gray-900">{{ stats.activeAssignments }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-yellow-100 rounded-lg">
+              <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Pending Assignments</p>
+              <p class="text-2xl font-bold text-gray-900">{{ stats.pendingAssignments }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-purple-100 rounded-lg">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Total Commission</p>
+              <p class="text-2xl font-bold text-gray-900">{{ formatCurrency(stats.totalCommission) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card bg-white shadow-sm">
+      <div class="card-body p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Search -->
+          <div>
+            <label class="label">
+              <span class="label-text">Search</span>
+            </label>
+            <input 
+              type="text" 
+              [(ngModel)]="filters.search"
+              placeholder="Search by customer, policy..."
+              class="input input-bordered w-full">
+          </div>
+
+          <!-- Status Filter -->
+          <div>
+            <label class="label">
+              <span class="label-text">Status</span>
+            </label>
+            <select [(ngModel)]="filters.status" class="select select-bordered w-full">
+              <option value="">All Status</option>
+              <option value="ACTIVE">Active</option>
+              <option value="PENDING">Pending</option>
+              <option value="CANCELLED">Cancelled</option>
+              <option value="EXPIRED">Expired</option>
+            </select>
+          </div>
+
+          <!-- Date From -->
+          <div>
+            <label class="label">
+              <span class="label-text">From Date</span>
+            </label>
+            <input 
+              type="date" 
+              [(ngModel)]="filters.dateFrom"
+              class="input input-bordered w-full">
+          </div>
+
+          <!-- Date To -->
+          <div>
+            <label class="label">
+              <span class="label-text">To Date</span>
+            </label>
+            <input 
+              type="date" 
+              [(ngModel)]="filters.dateTo"
+              class="input input-bordered w-full">
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center mt-4">
+          <div class="flex space-x-2">
+            <button (click)="applyFilters()" class="btn btn-primary">
+              Apply Filters
+            </button>
+            <button (click)="clearFilters()" class="btn btn-outline">
+              Clear Filters
+            </button>
+          </div>
+          <div *ngIf="getActiveFiltersCount() > 0" class="badge badge-info">
+            {{ getActiveFiltersCount() }} filter(s) active
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assignments Table -->
+    <div class="card bg-white shadow-sm">
+      <div class="card-body p-0">
+        <div class="overflow-x-auto">
+          <table class="table table-zebra">
+            <thead>
+              <tr>
+                <th>
+                  <input 
+                    type="checkbox" 
+                    class="checkbox checkbox-sm"
+                    [checked]="selectedAssignments.length === assignments.length && assignments.length > 0"
+                    (change)="selectAllAssignments()">
+                </th>
+                <th (click)="sortBy('userId')" class="cursor-pointer hover:bg-gray-50">
+                  Customer {{ getSortIcon('userId') }}
+                </th>
+                <th (click)="sortBy('policyProductId')" class="cursor-pointer hover:bg-gray-50">
+                  Policy {{ getSortIcon('policyProductId') }}
+                </th>
+                <th>Coverage</th>
+                <th>Premium</th>
+                <th>Status</th>
+                <th (click)="sortBy('startDate')" class="cursor-pointer hover:bg-gray-50">
+                  Start Date {{ getSortIcon('startDate') }}
+                </th>
+                <th (click)="sortBy('endDate')" class="cursor-pointer hover:bg-gray-50">
+                  End Date {{ getSortIcon('endDate') }}
+                </th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let assignment of assignments">
+                <td>
+                  <input 
+                    type="checkbox" 
+                    class="checkbox checkbox-sm"
+                    [checked]="selectedAssignments.includes(assignment._id)"
+                    (change)="selectAssignment(assignment._id)">
+                </td>
+                <td>
+                  <div class="flex items-center space-x-3">
+                    <div class="avatar placeholder">
+                      <div class="bg-primary text-primary-content rounded-full w-10">
+                        <span class="text-sm font-bold">{{ getAssignmentUserName(assignment).charAt(0) }}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="font-bold">{{ getAssignmentUserName(assignment) }}</div>
+                      <div class="text-sm opacity-50">{{ getAssignmentUserEmail(assignment) }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-sm font-medium">{{ getAssignmentPolicyTitle(assignment) }}</div>
+                  <div class="text-sm opacity-50">{{ getAssignmentPolicyCode(assignment) }}</div>
+                </td>
+                <td class="font-medium">{{ formatCurrency(getAssignmentCoverage(assignment)) }}</td>
+                <td class="font-medium">{{ formatCurrency(assignment.premiumPaid) }}</td>
+                <td>
+                  <span class="badge" [ngClass]="getStatusColor(assignment.status)">
+                    {{ getStatusText(assignment.status) }}
+                  </span>
+                  <div *ngIf="isAssignmentExpiringSoon(assignment)" class="text-xs text-yellow-600 mt-1">
+                    Expires in {{ getDaysUntilExpiry(assignment) }} days
+                  </div>
+                </td>
+                <td class="text-sm">{{ formatDate(assignment.startDate) }}</td>
+                <td class="text-sm">{{ formatDate(assignment.endDate) }}</td>
+                <td>
+                  <div class="flex space-x-2">
+                    <button 
+                      (click)="viewAssignment(assignment)" 
+                      class="btn btn-primary btn-xs">
+                      View
+                    </button>
+                    <button 
+                      *ngIf="assignment.status === 'PENDING'"
+                      (click)="updateAssignmentStatus(assignment._id, 'ACTIVE')" 
+                      class="btn btn-success btn-xs">
+                      Activate
+                    </button>
+                    <button 
+                      *ngIf="assignment.status === 'ACTIVE'"
+                      (click)="updateAssignmentStatus(assignment._id, 'CANCELLED')" 
+                      class="btn btn-error btn-xs">
+                      Cancel
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="assignments.length === 0">
+                <td colspan="9" class="text-center py-8 text-gray-500">
+                  No policy assignments found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="pagination.pages > 1" class="flex justify-center">
+      <div class="btn-group">
+        <button 
+          *ngFor="let page of [].constructor(pagination.pages); let i = index"
+          (click)="onPageChange(i + 1)"
+          class="btn btn-sm"
+          [class.btn-active]="pagination.page === i + 1">
+          {{ i + 1 }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Assignment Details Modal -->
+<div *ngIf="showAssignmentModal && viewingAssignment" class="modal modal-open">
+  <div class="modal-box max-w-4xl">
+    <h3 class="font-bold text-lg mb-4">Assignment Details</h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Customer Info -->
+      <div class="space-y-4">
+        <h5 class="font-semibold text-gray-900">Customer Information</h5>
+        <div class="flex items-center space-x-4">
+          <div class="avatar placeholder">
+            <div class="bg-primary text-primary-content rounded-full w-16">
+              <span class="text-xl font-bold">{{ getAssignmentUserName(viewingAssignment).charAt(0) }}</span>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-xl font-bold">{{ getAssignmentUserName(viewingAssignment) }}</h4>
+            <p class="text-gray-600">{{ getAssignmentUserEmail(viewingAssignment) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policy Info -->
+      <div class="space-y-4">
+        <h5 class="font-semibold text-gray-900">Policy Information</h5>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Policy Title:</span>
+            <span class="text-sm">{{ getAssignmentPolicyTitle(viewingAssignment) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Policy Code:</span>
+            <span class="text-sm">{{ getAssignmentPolicyCode(viewingAssignment) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Coverage:</span>
+            <span class="text-sm">{{ formatCurrency(getAssignmentCoverage(viewingAssignment)) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Premium:</span>
+            <span class="text-sm">{{ formatCurrency(viewingAssignment.premiumPaid) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assignment Details -->
+      <div class="space-y-4">
+        <h5 class="font-semibold text-gray-900">Assignment Details</h5>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Status:</span>
+            <span class="badge" [ngClass]="getStatusColor(viewingAssignment.status)">
+              {{ getStatusText(viewingAssignment.status) }}
+            </span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Start Date:</span>
+            <span class="text-sm">{{ formatDate(viewingAssignment.startDate) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">End Date:</span>
+            <span class="text-sm">{{ formatDate(viewingAssignment.endDate) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Created:</span>
+            <span class="text-sm">{{ formatDate(viewingAssignment.createdAt) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policy Description -->
+      <div class="space-y-4">
+        <h5 class="font-semibold text-gray-900">Policy Description</h5>
+        <p class="text-sm text-gray-600">{{ getAssignmentPolicyDescription(viewingAssignment) }}</p>
+      </div>
+    </div>
+
+    <div class="modal-action">
+      <button (click)="showAssignmentModal = false" class="btn btn-ghost">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

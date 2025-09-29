@@ -1,0 +1,16 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-header" *ngIf="title || subtitle">
+    <h2 class="form-title" *ngIf="title">{{ title }}</h2>
+    <p class="form-subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+  </div>
+
+  <div class="form-body">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="form-footer" *ngIf="showFooter">
+    <div class="form-actions">
+      <ng-content select="[slot=actions]"></ng-content>
+    </div>
+  </div>
+</form>

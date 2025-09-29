@@ -1,0 +1,200 @@
+<div class="min-h-screen bg-neutral-50">
+  <!-- Breadcrumb -->
+  <div class="bg-white border-b border-neutral-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <nav class="flex" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-4">
+          <li>
+            <a routerLink="/" class="text-neutral-500 hover:text-neutral-700 transition-colors duration-200 flex items-center">
+              <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+              </svg>
+              <span class="text-sm font-medium">Home</span>
+            </a>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg class="w-4 h-4 text-neutral-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+              </svg>
+              <a routerLink="/claims" class="ml-4 text-sm font-medium text-neutral-500 hover:text-neutral-700">Claims</a>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg class="w-4 h-4 text-neutral-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span class="ml-4 text-sm font-medium text-neutral-500">Claim Details</span>
+            </div>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-bold text-neutral-900">Claim Details</h1>
+        <p class="text-neutral-600 mt-1">View detailed information about your claim</p>
+      </div>
+      <button (click)="goBack()" class="btn-secondary">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Claims
+      </button>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex items-center justify-center py-12">
+      <div class="text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+        <p class="mt-4 text-neutral-600">Loading claim details...</p>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="text-center py-12">
+      <div class="text-red-500 mb-4">
+        <svg class="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+        </svg>
+        <p class="text-lg font-medium">{{ error }}</p>
+        <button (click)="goBack()" class="btn-primary mt-4">Go Back</button>
+      </div>
+    </div>
+
+    <!-- Claim Details -->
+    <div *ngIf="claim && !loading" class="space-y-6">
+      <!-- Claim Header Card -->
+      <div class="card">
+        <div class="card-body">
+          <div class="flex items-start justify-between mb-6">
+            <div class="flex items-center space-x-4">
+              <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-2xl font-bold text-neutral-900">{{ getPolicyDisplayName(claim) }}</h2>
+                <p class="text-neutral-600">Claim #{{ claim._id.slice(-8) }}</p>
+              </div>
+            </div>
+            <span class="badge text-lg px-4 py-2" [ngClass]="getStatusColor(claim.status)">{{ claim.status }}</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <p class="text-sm text-neutral-500 mb-1">Claim Amount</p>
+              <p class="text-2xl font-bold text-green-600">{{ formatCurrency(claim.amountClaimed) }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-neutral-500 mb-1">Incident Date</p>
+              <p class="text-lg font-semibold text-neutral-900">{{ formatDate(claim.incidentDate) }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-neutral-500 mb-1">Submitted</p>
+              <p class="text-lg font-semibold text-neutral-900">{{ formatDate(claim.createdAt) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policy Information -->
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-xl font-bold text-neutral-900 mb-4">Policy Information</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p class="text-sm text-neutral-500 mb-1">Policy Name</p>
+              <p class="text-lg font-semibold text-neutral-900">{{ getPolicyDisplayName(claim) }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-neutral-500 mb-1">Policy Code</p>
+              <p class="text-lg font-semibold text-neutral-900">{{ getPolicyCode(claim) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Incident Details -->
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-xl font-bold text-neutral-900 mb-4">Incident Details</h3>
+          <div class="space-y-4">
+            <div>
+              <p class="text-sm text-neutral-500 mb-2">Description</p>
+              <div class="bg-neutral-50 p-4 rounded-lg">
+                <p class="text-neutral-800">{{ claim.description }}</p>
+              </div>
+            </div>
+            
+            <div *ngIf="claim.decisionNotes" class="mt-4">
+              <p class="text-sm text-neutral-500 mb-2">Decision Notes</p>
+              <div class="bg-blue-50 p-4 rounded-lg">
+                <p class="text-blue-800">{{ claim.decisionNotes }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Claim Timeline -->
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-xl font-bold text-neutral-900 mb-4">Claim Timeline</h3>
+          <div class="space-y-4">
+            <div class="flex items-start space-x-3">
+              <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                <span class="text-blue-600 text-sm">📝</span>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-neutral-900">Claim Submitted</p>
+                <p class="text-xs text-neutral-500">{{ formatDateTime(claim.createdAt) }}</p>
+                <p class="text-sm text-neutral-600 mt-1">Your claim was successfully submitted and is being reviewed.</p>
+              </div>
+            </div>
+
+            <div *ngIf="claim.status === 'APPROVED'" class="flex items-start space-x-3">
+              <div class="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                <span class="text-green-600 text-sm">✅</span>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-neutral-900">Claim Approved</p>
+                <p class="text-xs text-neutral-500">{{ formatDateTime(claim.updatedAt || claim.createdAt) }}</p>
+                <p class="text-sm text-neutral-600 mt-1">Your claim has been approved and payment will be processed.</p>
+              </div>
+            </div>
+
+            <div *ngIf="claim.status === 'REJECTED'" class="flex items-start space-x-3">
+              <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                <span class="text-red-600 text-sm">❌</span>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-neutral-900">Claim Rejected</p>
+                <p class="text-xs text-neutral-500">{{ formatDateTime(claim.updatedAt || claim.createdAt) }}</p>
+                <p class="text-sm text-neutral-600 mt-1">Your claim has been rejected. Please contact support for more information.</p>
+              </div>
+            </div>
+
+            <div *ngIf="claim.status === 'PENDING'" class="flex items-start space-x-3">
+              <div class="flex-shrink-0 w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                <span class="text-yellow-600 text-sm">⏳</span>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-neutral-900">Under Review</p>
+                <p class="text-xs text-neutral-500">Submitted {{ getDaysSinceSubmission(claim) }} days ago</p>
+                <p class="text-sm text-neutral-600 mt-1">Your claim is currently being reviewed by our team.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

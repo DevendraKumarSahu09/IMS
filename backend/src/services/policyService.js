@@ -60,6 +60,70 @@ class PolicyService {
   }
 
   /**
+   * Update a policy product (Admin only)
+   * @param {string} policyId - The policy ID
+   * @param {Object} updateData - Updated policy data
+   * @returns {Promise<Object>} Updated policy
+   */
+  async updatePolicy(policyId, updateData) {
+    try {
+      // Check if policy exists
+      const policy = await Policy.findById(policyId);
+      if (!policy) {
+        throw new Error('Policy not found');
+      }
+
+      // If updating code, check if new code already exists
+      if (updateData.code && updateData.code !== policy.code) {
+        const existingPolicy = await Policy.findOne({ code: updateData.code });
+        if (existingPolicy) {
+          throw new Error('Policy code already exists');
+        }
+      }
+
+      const updatedPolicy = await Policy.findByIdAndUpdate(
+        policyId,
+        updateData,
+        { new: true, runValidators: true }
+      );
+
+      return updatedPolicy;
+    } catch (error) {
+      throw new Error(`Failed to update policy: ${error.message}`);
+    }
+  }
+
+  /**
+   * Delete a policy product (Admin only)
+   * @param {string} policyId - The policy ID
+   * @returns {Promise<Object>} Deleted policy
+   */
+  async deletePolicy(policyId) {
+    try {
+      // Check if policy exists
+      const policy = await Policy.findById(policyId);
+      if (!policy) {
+        throw new Error('Policy not found');
+      }
+
+      // Check if policy has active user policies
+      const activeUserPolicies = await UserPolicy.countDocuments({
+        policyProductId: policyId,
+        status: 'ACTIVE'
+      });
+
+      if (activeUserPolicies > 0) {
+        throw new Error('Cannot delete policy with active user policies');
+      }
+
+      await Policy.findByIdAndDelete(policyId);
+      return policy;
+    } catch (error) {
+      throw new Error(`Failed to delete policy: ${error.message}`);
+    }
+  }
+
+  /**
    * Purchase a policy for a user
    * @param {string} policyId - The policy ID to purchase
    * @param {string} userId - The user ID purchasing the policy

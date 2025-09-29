@@ -9,7 +9,12 @@ const register = async (_, { name, email, password, role }) => {
   const passwordHash = await bcrypt.hash(password, 10);
   const user = new User({ name, email, passwordHash, role });
   await user.save();
-  return { id: user._id, name: user.name, email: user.email, role: user.role };
+  
+  const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return {
+    token,
+    user: { id: user._id, name: user.name, email: user.email, role: user.role }
+  };
 };
 
 const login = async (_, { email, password }) => {
@@ -26,4 +31,22 @@ const login = async (_, { email, password }) => {
   };
 };
 
-module.exports = { Mutation: { register, login } };
+const me = async (_, __, { user }) => {
+  if (!user) throw new Error('Not authenticated');
+  
+  // Fetch the full user data from database using the ID from JWT token
+  const fullUser = await User.findById(user.id);
+  if (!fullUser) throw new Error('User not found');
+  
+  return { 
+    id: fullUser._id, 
+    name: fullUser.name, 
+    email: fullUser.email, 
+    role: fullUser.role 
+  };
+};
+
+module.exports = { 
+  Query: { me },
+  Mutation: { register, login } 
+};

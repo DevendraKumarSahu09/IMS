@@ -1,0 +1,363 @@
+<div class="min-h-screen bg-gray-50 p-6">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">Customer Management</h1>
+        <p class="text-gray-600 mt-2">Manage and track your assigned customers</p>
+      </div>
+      <div class="flex space-x-4">
+        <button (click)="loadCustomers()" class="btn btn-outline">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex items-center justify-center py-12">
+    <div class="loading loading-spinner loading-lg"></div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-error mb-6">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <span>{{ error }}</span>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!loading && !error" class="space-y-6">
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-blue-100 rounded-lg">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Total Customers</p>
+              <p class="text-2xl font-bold text-gray-900">{{ stats.totalCustomers }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-green-100 rounded-lg">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Active Customers</p>
+              <p class="text-2xl font-bold text-gray-900">{{ stats.activeCustomers }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-yellow-100 rounded-lg">
+              <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Total Policies</p>
+              <p class="text-2xl font-bold text-gray-900">{{ stats.totalPolicies }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-purple-100 rounded-lg">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Total Revenue</p>
+              <p class="text-2xl font-bold text-gray-900">{{ formatCurrency(stats.totalRevenue) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card bg-white shadow-sm">
+      <div class="card-body p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Search -->
+          <div>
+            <label class="label">
+              <span class="label-text">Search</span>
+            </label>
+            <input 
+              type="text" 
+              [(ngModel)]="filters.search"
+              placeholder="Search by name, email..."
+              class="input input-bordered w-full">
+          </div>
+
+          <!-- Status Filter -->
+          <div>
+            <label class="label">
+              <span class="label-text">Status</span>
+            </label>
+            <select [(ngModel)]="filters.status" class="select select-bordered w-full">
+              <option value="">All Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+
+          <!-- Date From -->
+          <div>
+            <label class="label">
+              <span class="label-text">From Date</span>
+            </label>
+            <input 
+              type="date" 
+              [(ngModel)]="filters.dateFrom"
+              class="input input-bordered w-full">
+          </div>
+
+          <!-- Date To -->
+          <div>
+            <label class="label">
+              <span class="label-text">To Date</span>
+            </label>
+            <input 
+              type="date" 
+              [(ngModel)]="filters.dateTo"
+              class="input input-bordered w-full">
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center mt-4">
+          <div class="flex space-x-2">
+            <button (click)="applyFilters()" class="btn btn-primary">
+              Apply Filters
+            </button>
+            <button (click)="clearFilters()" class="btn btn-outline">
+              Clear Filters
+            </button>
+          </div>
+          <div *ngIf="getActiveFiltersCount() > 0" class="badge badge-info">
+            {{ getActiveFiltersCount() }} filter(s) active
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customers Table -->
+    <div class="card bg-white shadow-sm">
+      <div class="card-body p-0">
+        <div class="overflow-x-auto">
+          <table class="table table-zebra">
+            <thead>
+              <tr>
+                <th>
+                  <input 
+                    type="checkbox" 
+                    class="checkbox checkbox-sm"
+                    [checked]="selectedCustomers.length === customers.length && customers.length > 0"
+                    (change)="selectAllCustomers()">
+                </th>
+                <th (click)="sortBy('name')" class="cursor-pointer hover:bg-gray-50">
+                  Customer {{ getSortIcon('name') }}
+                </th>
+                <th (click)="sortBy('email')" class="cursor-pointer hover:bg-gray-50">
+                  Contact {{ getSortIcon('email') }}
+                </th>
+                <th>Status</th>
+                <th (click)="sortBy('createdAt')" class="cursor-pointer hover:bg-gray-50">
+                  Joined {{ getSortIcon('createdAt') }}
+                </th>
+                <th>Policies</th>
+                <th>Claims</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let customer of customers">
+                <td>
+                  <input 
+                    type="checkbox" 
+                    class="checkbox checkbox-sm"
+                    [checked]="selectedCustomers.includes(customer._id)"
+                    (change)="selectCustomer(customer._id)">
+                </td>
+                <td>
+                  <div class="flex items-center space-x-3">
+                    <div class="avatar placeholder">
+                      <div class="bg-primary text-primary-content rounded-full w-10">
+                        <span class="text-sm font-bold">{{ getCustomerInitials(customer) }}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="font-bold">{{ customer.name }}</div>
+                      <div class="text-sm opacity-50">ID: {{ customer._id.slice(-8) }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-sm font-medium">{{ customer.email }}</div>
+                  <div class="text-sm opacity-50">{{ customer.phone || 'No phone' }}</div>
+                </td>
+                <td>
+                  <span class="badge" [ngClass]="getStatusColor(customer.isActive)">
+                    {{ getStatusText(customer.isActive) }}
+                  </span>
+                </td>
+                <td class="text-sm">{{ formatDate(customer.createdAt) }}</td>
+                <td>
+                  <div class="text-sm font-medium">{{ customer.assignedPolicies || 0 }}</div>
+                  <div class="text-xs opacity-50">policies</div>
+                </td>
+                <td>
+                  <div class="text-sm font-medium">{{ customer.totalClaims || 0 }}</div>
+                  <div class="text-xs opacity-50">claims</div>
+                </td>
+                <td>
+                  <div class="flex space-x-2">
+                    <button 
+                      (click)="viewCustomer(customer)" 
+                      class="btn btn-primary btn-xs">
+                      View
+                    </button>
+                    <button 
+                      (click)="contactCustomer(customer)" 
+                      class="btn btn-outline btn-xs">
+                      Contact
+                    </button>
+                    <button 
+                      (click)="assignToCustomer(customer._id)" 
+                      class="btn btn-success btn-xs">
+                      Assign
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="customers.length === 0">
+                <td colspan="8" class="text-center py-8 text-gray-500">
+                  No customers found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="pagination.pages > 1" class="flex justify-center">
+      <div class="btn-group">
+        <button 
+          *ngFor="let page of [].constructor(pagination.pages); let i = index"
+          (click)="onPageChange(i + 1)"
+          class="btn btn-sm"
+          [class.btn-active]="pagination.page === i + 1">
+          {{ i + 1 }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Customer Details Modal -->
+<div *ngIf="showCustomerModal && viewingCustomer" class="modal modal-open">
+  <div class="modal-box max-w-2xl">
+    <h3 class="font-bold text-lg mb-4">Customer Details</h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Customer Info -->
+      <div class="space-y-4">
+        <div class="flex items-center space-x-4">
+          <div class="avatar placeholder">
+            <div class="bg-primary text-primary-content rounded-full w-16">
+              <span class="text-xl font-bold">{{ getCustomerInitials(viewingCustomer) }}</span>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-xl font-bold">{{ viewingCustomer.name }}</h4>
+            <p class="text-gray-600">{{ viewingCustomer.email }}</p>
+            <span class="badge" [ngClass]="getStatusColor(viewingCustomer.isActive)">
+              {{ getStatusText(viewingCustomer.isActive) }}
+            </span>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Customer ID:</span>
+            <span class="text-sm">{{ viewingCustomer._id }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Phone:</span>
+            <span class="text-sm">{{ viewingCustomer.phone || 'Not provided' }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Joined:</span>
+            <span class="text-sm">{{ formatDate(viewingCustomer.createdAt) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Last Login:</span>
+            <span class="text-sm">{{ viewingCustomer.lastLogin ? formatDate(viewingCustomer.lastLogin) : 'Never' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="space-y-4">
+        <h5 class="font-semibold text-gray-900">Customer Statistics</h5>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="text-center p-4 bg-blue-50 rounded-lg">
+            <div class="text-2xl font-bold text-blue-600">{{ viewingCustomer.assignedPolicies || 0 }}</div>
+            <div class="text-sm text-gray-600">Policies</div>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <div class="text-2xl font-bold text-green-600">{{ viewingCustomer.totalClaims || 0 }}</div>
+            <div class="text-sm text-gray-600">Claims</div>
+          </div>
+          <div class="text-center p-4 bg-yellow-50 rounded-lg">
+            <div class="text-2xl font-bold text-yellow-600">{{ viewingCustomer.totalPayments || 0 }}</div>
+            <div class="text-sm text-gray-600">Payments</div>
+          </div>
+          <div class="text-center p-4 bg-purple-50 rounded-lg">
+            <div class="text-2xl font-bold text-purple-600">{{ formatCurrency(viewingCustomer.totalPayments || 0) }}</div>
+            <div class="text-sm text-gray-600">Revenue</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-action">
+      <button (click)="contactCustomer(viewingCustomer)" class="btn btn-primary">
+        Contact Customer
+      </button>
+      <button (click)="assignToCustomer(viewingCustomer._id)" class="btn btn-success">
+        Assign Task
+      </button>
+      <button (click)="showCustomerModal = false" class="btn btn-ghost">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

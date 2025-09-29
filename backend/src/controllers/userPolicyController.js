@@ -13,9 +13,15 @@ exports.getUserPolicies = async (req, res) => {
       .populate('assignedAgentId', 'name email')
       .sort({ createdAt: -1 });
     
-    res.json(userPolicies);
+    res.json({
+      success: true,
+      data: userPolicies
+    });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ 
+      success: false,
+      error: err.message 
+    });
   }
 };
 
@@ -27,17 +33,29 @@ exports.getUserPolicyById = async (req, res) => {
       .populate('assignedAgentId', 'name email');
     
     if (!userPolicy) {
-      return res.status(404).json({ error: 'User policy not found' });
+      return res.status(404).json({ 
+        success: false,
+        error: 'User policy not found' 
+      });
     }
     
     // Check if user has access to this policy
     if (req.user.role === 'customer' && userPolicy.userId._id.toString() !== req.user.id) {
-      return res.status(403).json({ error: 'Access denied' });
+      return res.status(403).json({ 
+        success: false,
+        error: 'Access denied' 
+      });
     }
     
-    res.json(userPolicy);
+    res.json({
+      success: true,
+      data: userPolicy
+    });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ 
+      success: false,
+      error: err.message 
+    });
   }
 };
 

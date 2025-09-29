@@ -1,0 +1,147 @@
+<div class="data-table-container">
+  <!-- Table Header -->
+  <div class="data-table-header" *ngIf="showHeader">
+    <div class="flex items-center justify-between">
+      <h3 class="data-table-title" *ngIf="title">{{ title }}</h3>
+      <div class="data-table-actions" *ngIf="showActions">
+        <ng-content select="[slot=actions]"></ng-content>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Wrapper -->
+  <div class="data-table-wrapper">
+    <table class="data-table">
+      <thead class="data-table-thead">
+        <tr>
+          <th *ngIf="selectable" class="data-table-th data-table-th-checkbox">
+            <input 
+              type="checkbox" 
+              class="data-table-checkbox"
+              [checked]="allSelected"
+              (change)="toggleSelectAll()"
+            />
+          </th>
+          <th 
+            *ngFor="let column of columns" 
+            class="data-table-th"
+            [class.cursor-pointer]="column.sortable"
+            [class.select-none]="column.sortable"
+            (click)="column.sortable ? sort(column.key) : null">
+            <div class="flex items-center space-x-2">
+              <span>{{ column.label }}</span>
+              <svg 
+                *ngIf="column.sortable" 
+                class="w-4 h-4 text-neutral-400"
+                [class.text-primary-600]="sortKey === column.key"
+                [class.rotate-180]="sortKey === column.key && sortDirection === 'desc'"
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="data-table-tbody">
+        <tr 
+          *ngFor="let row of paginatedData; let i = index" 
+          class="data-table-tr"
+          [class.selected]="isRowSelected(row)"
+          (click)="onRowClick(row, i)">
+          <td *ngIf="selectable" class="data-table-td data-table-td-checkbox">
+            <input 
+              type="checkbox" 
+              class="data-table-checkbox"
+              [checked]="isRowSelected(row)"
+              (change)="toggleRowSelection(row, $event)"
+              (click)="$event.stopPropagation()"
+            />
+          </td>
+          <td 
+            *ngFor="let column of columns" 
+            class="data-table-td"
+            [class]="column.cellClass">
+            <ng-container [ngSwitch]="column.type">
+              <!-- Text -->
+              <span *ngSwitchCase="'text'">{{ getCellValue(row, column.key) }}</span>
+              
+              <!-- Badge -->
+              <span 
+                *ngSwitchCase="'badge'" 
+                class="badge"
+                [class]="getBadgeClass(row, column.key)">
+                {{ getCellValue(row, column.key) }}
+              </span>
+              
+              <!-- Avatar -->
+              <div *ngSwitchCase="'avatar'" class="flex items-center">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center mr-3"
+                     [class]="getAvatarClass(row, column.key)">
+                  <span class="text-xs font-medium">{{ getInitials(row, column.key) }}</span>
+                </div>
+                <div>
+                  <div class="text-sm font-medium text-neutral-900">{{ getCellValue(row, column.key) }}</div>
+                  <div class="text-sm text-neutral-500" *ngIf="column.subtitle">{{ getCellValue(row, column.subtitle) }}</div>
+                </div>
+              </div>
+              
+              <!-- Actions -->
+              <div *ngSwitchCase="'actions'" class="flex space-x-2">
+                <ng-content select="[slot=row-actions]"></ng-content>
+              </div>
+              
+              <!-- Custom -->
+              <ng-container *ngSwitchDefault>
+                <ng-content 
+                  *ngTemplateOutlet="column.template; context: { $implicit: row, column: column }">
+                </ng-content>
+              </ng-container>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Table Footer -->
+  <div class="data-table-footer" *ngIf="showPagination || showBulkActions">
+    <!-- Bulk Actions -->
+    <div class="data-table-bulk-actions" *ngIf="showBulkActions && selectedRows.length > 0">
+      <div class="flex items-center space-x-4">
+        <span class="text-sm text-neutral-700">
+          <span class="font-medium">{{ selectedRows.length }}</span> of <span class="font-medium">{{ data.length }}</span> selected
+        </span>
+        <div class="flex space-x-2">
+          <ng-content select="[slot=bulk-actions]"></ng-content>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="data-table-pagination" *ngIf="showPagination">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-neutral-700">
+          Showing <span class="font-medium">{{ (currentPage - 1) * pageSize + 1 }}</span> to 
+          <span class="font-medium">{{ Math.min(currentPage * pageSize, data.length) }}</span> of 
+          <span class="font-medium">{{ data.length }}</span> results
+        </div>
+        <div class="flex space-x-2">
+          <button 
+            class="btn-secondary text-sm"
+            [disabled]="currentPage === 1"
+            (click)="goToPage(currentPage - 1)">
+            Previous
+          </button>
+          <button 
+            class="btn-primary text-sm"
+            [disabled]="currentPage === totalPages"
+            (click)="goToPage(currentPage + 1)">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

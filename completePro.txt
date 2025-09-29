@@ -163,16 +163,6 @@ Testing: Jest (backend), Jasmine/Karma (Angular unit), Playwright for simple e2e
 API Docs: Swagger (OpenAPI) 
 ________________________________________
 6. API Examples (Detailed)
-6.1 Register
-POST /api/v1/auth/register Request body:
-{ "name": "Ravi Kumar", "email": "ravi@example.com", "password": "pass@123", "role": "customer" }
-Response (201):
-{ "message": "registered", "user": { "_id":"...", "name":"Ravi Kumar", "email":"ravi@example.com", "role":"customer" } }
-6.2 Login
-POST /api/v1/auth/login Request:
-{ "email": "ravi@example.com", "password": "pass@123" }
-Response:
-{ "token": "<jwt>", "user": { "_id": "...", "name": "Ravi" } }
 6.3 Purchase Policy
 POST /api/v1/policies/:id/purchase (Auth: Bearer) Request:
 { "startDate": "2025-09-01", "termMonths": 12, "nominee": { "name":"Asha", "relation":"spouse" } }

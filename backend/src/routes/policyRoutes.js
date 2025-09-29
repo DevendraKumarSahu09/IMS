@@ -12,6 +12,8 @@ router.get('/:id', policyController.getPolicyById);
 // Protected routes
 router.use(authenticateJWT);
 router.post('/', authorizeRoles('admin'), policyController.createPolicy);
+router.put('/:id', authorizeRoles('admin'), policyController.updatePolicy);
+router.delete('/:id', authorizeRoles('admin'), policyController.deletePolicy);
 router.post('/:id/purchase', authorizeRoles('customer'), validatePolicyPurchase, policyController.purchasePolicy);
 
 module.exports = router;

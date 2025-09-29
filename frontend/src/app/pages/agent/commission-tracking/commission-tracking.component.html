@@ -1,0 +1,375 @@
+<div class="min-h-screen bg-gray-50 p-6">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">Commission Tracking</h1>
+        <p class="text-gray-600 mt-2">Track your earnings and commission history</p>
+      </div>
+      <div class="flex space-x-4">
+        <button (click)="loadCommissions()" class="btn btn-outline">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex items-center justify-center py-12">
+    <div class="loading loading-spinner loading-lg"></div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-error mb-6">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <span>{{ error }}</span>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!loading && !error" class="space-y-6">
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-green-100 rounded-lg">
+              <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Total Commission</p>
+              <p class="text-2xl font-bold text-gray-900">{{ formatCurrency(stats.totalCommission) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-blue-100 rounded-lg">
+              <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Paid Commission</p>
+              <p class="text-2xl font-bold text-gray-900">{{ formatCurrency(stats.paidCommission) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-yellow-100 rounded-lg">
+              <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">Pending Commission</p>
+              <p class="text-2xl font-bold text-gray-900">{{ formatCurrency(stats.pendingCommission) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex items-center">
+            <div class="p-3 bg-purple-100 rounded-lg">
+              <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm font-medium text-gray-600">This Month</p>
+              <p class="text-2xl font-bold text-gray-900">{{ formatCurrency(stats.thisMonthCommission) }}</p>
+              <p class="text-xs text-gray-500" [class.text-green-600]="getGrowthPercentage() > 0" [class.text-red-600]="getGrowthPercentage() < 0">
+                {{ getGrowthPercentage() > 0 ? '+' : '' }}{{ getGrowthPercentage().toFixed(1) }}% vs last month
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monthly Chart -->
+    <div class="card bg-white shadow-sm">
+      <div class="card-header">
+        <h3 class="card-title">Monthly Commission Trend</h3>
+      </div>
+      <div class="card-body">
+        <div class="h-64 flex items-end space-x-2">
+          <div *ngFor="let month of monthlyData.slice(0, 12)" class="flex-1 flex flex-col items-center">
+            <div class="w-full bg-gray-200 rounded-t" [style.height.px]="getChartBarHeight(month.totalCommission)">
+              <div class="w-full bg-gradient-to-t from-blue-500 to-blue-400 rounded-t"></div>
+            </div>
+            <div class="text-xs text-gray-600 mt-2 transform -rotate-45 origin-left">
+              {{ month.month.substring(0, 3) }}
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
+              {{ formatCurrency(month.totalCommission) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card bg-white shadow-sm">
+      <div class="card-body p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Search -->
+          <div>
+            <label class="label">
+              <span class="label-text">Search</span>
+            </label>
+            <input 
+              type="text" 
+              [(ngModel)]="filters.search"
+              placeholder="Search by customer, policy..."
+              class="input input-bordered w-full">
+          </div>
+
+          <!-- Status Filter -->
+          <div>
+            <label class="label">
+              <span class="label-text">Status</span>
+            </label>
+            <select [(ngModel)]="filters.status" class="select select-bordered w-full">
+              <option value="">All Status</option>
+              <option value="PAID">Paid</option>
+              <option value="PENDING">Pending</option>
+              <option value="CANCELLED">Cancelled</option>
+            </select>
+          </div>
+
+          <!-- Month Filter -->
+          <div>
+            <label class="label">
+              <span class="label-text">Month</span>
+            </label>
+            <select [(ngModel)]="filters.month" class="select select-bordered w-full">
+              <option value="">All Months</option>
+              <option *ngFor="let month of ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']" [value]="month">
+                {{ month }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Year Filter -->
+          <div>
+            <label class="label">
+              <span class="label-text">Year</span>
+            </label>
+            <select [(ngModel)]="filters.year" class="select select-bordered w-full">
+              <option value="">All Years</option>
+              <option *ngFor="let year of [currentYear, currentYear - 1, currentYear - 2]" [value]="year">
+                {{ year }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center mt-4">
+          <div class="flex space-x-2">
+            <button (click)="applyFilters()" class="btn btn-primary">
+              Apply Filters
+            </button>
+            <button (click)="clearFilters()" class="btn btn-outline">
+              Clear Filters
+            </button>
+          </div>
+          <div *ngIf="getActiveFiltersCount() > 0" class="badge badge-info">
+            {{ getActiveFiltersCount() }} filter(s) active
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commission Records Table -->
+    <div class="card bg-white shadow-sm">
+      <div class="card-body p-0">
+        <div class="overflow-x-auto">
+          <table class="table table-zebra">
+            <thead>
+              <tr>
+                <th>
+                  <input 
+                    type="checkbox" 
+                    class="checkbox checkbox-sm"
+                    [checked]="selectedCommissions.length === commissions.length && commissions.length > 0"
+                    (change)="selectAllCommissions()">
+                </th>
+                <th (click)="sortBy('customerName')" class="cursor-pointer hover:bg-gray-50">
+                  Customer {{ getSortIcon('customerName') }}
+                </th>
+                <th (click)="sortBy('policyTitle')" class="cursor-pointer hover:bg-gray-50">
+                  Policy {{ getSortIcon('policyTitle') }}
+                </th>
+                <th>Premium</th>
+                <th>Rate</th>
+                <th (click)="sortBy('commissionAmount')" class="cursor-pointer hover:bg-gray-50">
+                  Commission {{ getSortIcon('commissionAmount') }}
+                </th>
+                <th>Status</th>
+                <th (click)="sortBy('createdAt')" class="cursor-pointer hover:bg-gray-50">
+                  Date {{ getSortIcon('createdAt') }}
+                </th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let commission of commissions">
+                <td>
+                  <input 
+                    type="checkbox" 
+                    class="checkbox checkbox-sm"
+                    [checked]="selectedCommissions.includes(commission._id)"
+                    (change)="selectCommission(commission._id)">
+                </td>
+                <td>
+                  <div class="flex items-center space-x-3">
+                    <div class="avatar placeholder">
+                      <div class="bg-primary text-primary-content rounded-full w-10">
+                        <span class="text-sm font-bold">{{ commission.customerName.charAt(0) }}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="font-bold">{{ commission.customerName }}</div>
+                      <div class="text-sm opacity-50">{{ commission.month }} {{ commission.year }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-sm font-medium">{{ commission.policyTitle }}</div>
+                  <div class="text-sm opacity-50">{{ commission.policyCode }}</div>
+                </td>
+                <td class="font-medium">{{ formatCurrency(commission.premiumAmount) }}</td>
+                <td class="text-sm">{{ (commission.commissionRate * 100).toFixed(1) }}%</td>
+                <td class="font-medium text-green-600">{{ formatCurrency(commission.commissionAmount) }}</td>
+                <td>
+                  <span class="badge" [ngClass]="getStatusColor(commission.status)">
+                    {{ getStatusText(commission.status) }}
+                  </span>
+                </td>
+                <td class="text-sm">{{ formatDate(commission.createdAt) }}</td>
+                <td>
+                  <div class="flex space-x-2">
+                    <button 
+                      (click)="viewCommission(commission)" 
+                      class="btn btn-primary btn-xs">
+                      View
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="commissions.length === 0">
+                <td colspan="9" class="text-center py-8 text-gray-500">
+                  No commission records found
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="pagination.pages > 1" class="flex justify-center">
+      <div class="btn-group">
+        <button 
+          *ngFor="let page of [].constructor(pagination.pages); let i = index"
+          (click)="onPageChange(i + 1)"
+          class="btn btn-sm"
+          [class.btn-active]="pagination.page === i + 1">
+          {{ i + 1 }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Commission Details Modal -->
+<div *ngIf="showCommissionModal && viewingCommission" class="modal modal-open">
+  <div class="modal-box max-w-2xl">
+    <h3 class="font-bold text-lg mb-4">Commission Details</h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Commission Info -->
+      <div class="space-y-4">
+        <h5 class="font-semibold text-gray-900">Commission Information</h5>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Commission ID:</span>
+            <span class="text-sm">{{ viewingCommission._id }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Amount:</span>
+            <span class="text-sm font-bold text-green-600">{{ formatCurrency(viewingCommission.commissionAmount) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Rate:</span>
+            <span class="text-sm">{{ (viewingCommission.commissionRate * 100).toFixed(1) }}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Status:</span>
+            <span class="badge" [ngClass]="getStatusColor(viewingCommission.status)">
+              {{ getStatusText(viewingCommission.status) }}
+            </span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Created:</span>
+            <span class="text-sm">{{ formatDate(viewingCommission.createdAt) }}</span>
+          </div>
+          <div class="flex justify-between" *ngIf="viewingCommission.paymentDate">
+            <span class="text-sm font-medium">Paid On:</span>
+            <span class="text-sm">{{ formatDate(viewingCommission.paymentDate) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policy & Customer Info -->
+      <div class="space-y-4">
+        <h5 class="font-semibold text-gray-900">Policy & Customer</h5>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Customer:</span>
+            <span class="text-sm">{{ viewingCommission.customerName }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Policy:</span>
+            <span class="text-sm">{{ viewingCommission.policyTitle }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Policy Code:</span>
+            <span class="text-sm">{{ viewingCommission.policyCode }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Premium:</span>
+            <span class="text-sm">{{ formatCurrency(viewingCommission.premiumAmount) }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">Period:</span>
+            <span class="text-sm">{{ viewingCommission.month }} {{ viewingCommission.year }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-action">
+      <button (click)="showCommissionModal = false" class="btn btn-ghost">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

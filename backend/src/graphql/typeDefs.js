@@ -14,11 +14,11 @@ const typeDefs = gql`
   }
 
   type Query {
-    _empty: String
+    me: User
   }
 
   type Mutation {
-    register(name: String!, email: String!, password: String!, role: String!): User!
+    register(name: String!, email: String!, password: String!, role: String!): AuthPayload!
     login(email: String!, password: String!): AuthPayload!
   }
 `;
