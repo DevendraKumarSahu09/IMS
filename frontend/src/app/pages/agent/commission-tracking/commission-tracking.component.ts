@@ -172,6 +172,10 @@ export class AgentCommissionTrackingComponent implements OnInit, OnDestroy {
     const commissions: CommissionRecord[] = [];
     const currentDate = new Date();
     
+    if (!Array.isArray(policies)) {
+      return commissions;
+    }
+    
     policies.forEach((policy, index) => {
       const policyDate = new Date(policy.createdAt);
       const month = policyDate.getMonth() + 1;

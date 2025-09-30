@@ -172,18 +172,18 @@ export class UserManagementComponent implements OnInit, OnDestroy {
       // Return individual user stats
       return {
         total: 1,
-        agents: user.role === 'agent' ? 1 : 0,
-        admins: user.role === 'admin' ? 1 : 0,
-        customers: user.role === 'customer' ? 1 : 0,
+        agents: user.role === 'AGENT' ? 1 : 0,
+        admins: user.role === 'ADMIN' ? 1 : 0,
+        customers: user.role === 'USER' ? 1 : 0,
         assignedClaims: user.assignedClaims || 0
       };
     }
 
     // Return overall stats
     const total = this.users.length;
-    const agents = this.users.filter(u => u.role === 'agent').length;
-    const admins = this.users.filter(u => u.role === 'admin').length;
-    const customers = this.users.filter(u => u.role === 'customer').length;
+    const agents = this.users.filter(u => u.role === 'AGENT').length;
+    const admins = this.users.filter(u => u.role === 'ADMIN').length;
+    const customers = this.users.filter(u => u.role === 'USER').length;
 
     return { total, agents, admins, customers };
   }
@@ -503,9 +503,9 @@ export class UserManagementComponent implements OnInit, OnDestroy {
 
   getRoleColor(role: string): string {
     switch (role?.toLowerCase()) {
-      case 'admin': return 'badge-error';
-      case 'agent': return 'badge-warning';
-      case 'customer': return 'badge-info';
+      case 'ADMIN': return 'badge-error';
+      case 'AGENT': return 'badge-warning';
+      case 'USER': return 'badge-info';
       default: return 'badge-neutral';
     }
   }
