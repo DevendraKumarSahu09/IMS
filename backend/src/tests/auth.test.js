@@ -7,10 +7,13 @@ describe('Authentication Tests', () => {
     const REGISTER_MUTATION = gql`
       mutation Register($name: String!, $email: String!, $password: String!, $role: String!) {
         register(name: $name, email: $email, password: $password, role: $role) {
-          id
-          name
-          email
-          role
+          token
+          user {
+            id
+            name
+            email
+            role
+          }
         }
       }
     `;
@@ -46,8 +49,9 @@ describe('Authentication Tests', () => {
         .expect(200);
 
       expect(response.body.data.register).toBeDefined();
-      expect(response.body.data.register.email).toBe(variables.email);
-      expect(response.body.data.register.role).toBe(variables.role);
+      expect(response.body.data.register.user.email).toBe(variables.email);
+      expect(response.body.data.register.user.role).toBe(variables.role);
+      expect(response.body.data.register.token).toBeDefined();
     });
 
     test('should not register user with existing email', async () => {

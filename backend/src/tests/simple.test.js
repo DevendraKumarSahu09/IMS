@@ -24,6 +24,8 @@ describe('Basic API Tests', () => {
       .get('/api/v1/policies')
       .expect(200);
     
-    expect(Array.isArray(response.body)).toBe(true);
+    expect(response.body).toHaveProperty('success', true);
+    expect(response.body).toHaveProperty('data');
+    expect(Array.isArray(response.body.data)).toBe(true);
   });
 });

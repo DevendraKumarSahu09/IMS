@@ -8,7 +8,9 @@ describe('Working Backend Tests', () => {
       .get('/api/v1/policies')
       .expect(200);
     
-    expect(Array.isArray(response.body)).toBe(true);
+    expect(response.body).toHaveProperty('success', true);
+    expect(response.body).toHaveProperty('data');
+    expect(Array.isArray(response.body.data)).toBe(true);
   });
 
   test('should handle CORS properly', async () => {
@@ -42,6 +44,7 @@ describe('Working Backend Tests', () => {
       .get('/api/v1/policies/invalid-id')
       .expect(404);
     
+    expect(response.body).toHaveProperty('success', false);
     expect(response.body).toHaveProperty('error');
   });
 });

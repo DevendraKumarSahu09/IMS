@@ -53,10 +53,10 @@ describe('Claim Tests', () => {
       await testUserPolicy.save();
 
       const claimData = {
-        policyId: testUserPolicy._id,
+        userPolicyId: testUserPolicy._id,
         incidentDate: '2025-06-15',
         description: 'Car accident on highway',
-        amount: 25000
+        amountClaimed: 25000
       };
 
       const response = await request(app)
@@ -74,10 +74,10 @@ describe('Claim Tests', () => {
 
     test('should reject claim creation without authentication', async () => {
       const claimData = {
-        policyId: '507f1f77bcf86cd799439011', // Fake ID
+        userPolicyId: '507f1f77bcf86cd799439011', // Fake ID
         incidentDate: '2025-06-15',
         description: 'Car accident on highway',
-        amount: 25000
+        amountClaimed: 25000
       };
 
       const response = await request(app)
@@ -106,10 +106,10 @@ describe('Claim Tests', () => {
       );
 
       const invalidData = {
-        policyId: 'invalid-id',
+        userPolicyId: 'invalid-id',
         incidentDate: 'invalid-date',
         description: '',
-        amount: -1000
+        amountClaimed: -1000
       };
 
       const response = await request(app)
@@ -140,10 +140,10 @@ describe('Claim Tests', () => {
       );
 
       const claimData = {
-        policyId: '507f1f77bcf86cd799439011', // Non-existent ID
+        userPolicyId: '507f1f77bcf86cd799439011', // Non-existent ID
         incidentDate: '2025-06-15',
         description: 'Car accident on highway',
-        amount: 25000
+        amountClaimed: 25000
       };
 
       const response = await request(app)
@@ -214,10 +214,12 @@ describe('Claim Tests', () => {
         .set('Authorization', `Bearer ${testToken}`)
         .expect(200);
 
-      expect(Array.isArray(response.body)).toBe(true);
-      expect(response.body.length).toBeGreaterThan(0);
-      expect(response.body[0]).toHaveProperty('userId');
-      expect(response.body[0].userId._id.toString()).toBe(testCustomer._id.toString());
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('data');
+      expect(Array.isArray(response.body.data)).toBe(true);
+      expect(response.body.data.length).toBeGreaterThan(0);
+      expect(response.body.data[0]).toHaveProperty('userId');
+      expect(response.body.data[0].userId._id.toString()).toBe(testCustomer._id.toString());
     });
 
     test('should return all claims for agent', async () => {
@@ -242,7 +244,9 @@ describe('Claim Tests', () => {
         .set('Authorization', `Bearer ${testAgentToken}`)
         .expect(200);
 
-      expect(Array.isArray(response.body)).toBe(true);
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('data');
+      expect(Array.isArray(response.body.data)).toBe(true);
     });
 
     test('should return all claims for admin', async () => {
@@ -267,7 +271,9 @@ describe('Claim Tests', () => {
         .set('Authorization', `Bearer ${testAdminToken}`)
         .expect(200);
 
-      expect(Array.isArray(response.body)).toBe(true);
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('data');
+      expect(Array.isArray(response.body.data)).toBe(true);
     });
 
     test('should reject access without authentication', async () => {
@@ -336,9 +342,11 @@ describe('Claim Tests', () => {
         .set('Authorization', `Bearer ${testToken}`)
         .expect(200);
 
-      expect(response.body).toHaveProperty('_id', testClaim._id.toString());
-      expect(response.body).toHaveProperty('userId');
-      expect(response.body.userId._id.toString()).toBe(testCustomer._id.toString());
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('data');
+      expect(response.body.data).toHaveProperty('_id', testClaim._id.toString());
+      expect(response.body.data).toHaveProperty('userId');
+      expect(response.body.data.userId._id.toString()).toBe(testCustomer._id.toString());
     });
 
     test('should return specific claim for agent', async () => {
@@ -405,7 +413,9 @@ describe('Claim Tests', () => {
         .set('Authorization', `Bearer ${testAgentToken}`)
         .expect(200);
 
-      expect(response.body).toHaveProperty('_id', testClaim._id.toString());
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('data');
+      expect(response.body.data).toHaveProperty('_id', testClaim._id.toString());
     });
 
     test('should return 404 for non-existent claim', async () => {
